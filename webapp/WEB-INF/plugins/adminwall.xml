@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<plug-in>
+    <name>adminwall</name>
+    <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
+    <version>1.0.0</version>
+    <documentation></documentation>
+    <installation></installation>
+    <changes></changes>
+    <user-guide></user-guide>
+    <description>adminwall.plugin.description</description>
+    <provider>adminwall.plugin.provider</provider>
+    <provider-url>http://fr.lutece.paris.fr</provider-url>
+    <icon-url>images/admin/skin/feature_default_icon.png</icon-url>
+    <copyright>Copyright</copyright>
+    <db-pool-required>1</db-pool-required>
+    
+    <!-- Admin features parameters -->
+    <admin-features>
+        <admin-feature>
+            <feature-id>ADMINWALL_ACCESS</feature-id>
+            <feature-title>adminwall.adminFeature.AdminWall.name</feature-title>
+            <feature-description>adminwall.adminFeature.AdminWall.description</feature-description>
+            <feature-level>0</feature-level>
+            <feature-url>jsp/admin/plugins/adminwall/ManageWall.jsp</feature-url>
+            <feature-icon-url></feature-icon-url>
+      </admin-feature>
+    </admin-features>    
+  	<!-- XPages parameters -->
+    <applications>
+    </applications>
+	<!-- Portlet parameters -->
+    <portlets>
+   </portlets>
+</plug-in>

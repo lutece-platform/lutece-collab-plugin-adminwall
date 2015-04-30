@@ -1,0 +1,43 @@
+<div class="row-fluid" >
+    <div class="span8">
+
+        <@messages infos=infos />
+
+        <@paginationAdmin paginator=paginator combo=1 />
+
+        <input type="hidden" id="id_post" name="id_post"  />
+
+        <#list post_list as post >
+
+        <input type="hidden" id="id_post" name="id_post"  />
+        
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <img class="avatar avatar-large" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${user_id}">
+                <h4>${post.auteur}, le ${post.date}</h4>
+                <p class="pull-right">
+                    <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&id_post=${post.idPost}"
+                           class="btn btn-danger btn-xs" title="#i18n{portal.util.labelDelete}" >
+                            <i class="icon-trash icon-white"></i>
+                        </a>  
+                </p>
+                
+                </div>
+      
+            <div class="box-body">
+                    ${post.contenu}   
+      
+                </div>
+
+            </div>
+        
+        </#list>
+
+        <@paginationAdmin paginator=paginator />
+    </div>
+    <div class="span4" >
+        <#include "create_post.html" />
+    </div>
+</div>
+
+

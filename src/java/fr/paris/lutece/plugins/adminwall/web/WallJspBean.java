@@ -39,6 +39,7 @@ import fr.paris.lutece.plugins.adminwall.business.Link;
 import fr.paris.lutece.plugins.adminwall.business.LinkHome;
 import fr.paris.lutece.plugins.adminwall.business.Post;
 import fr.paris.lutece.plugins.adminwall.business.PostHome;
+import fr.paris.lutece.plugins.adminwall.service.AdminWallService;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -51,9 +52,7 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
-
 import java.sql.Date;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -149,49 +148,11 @@ public class WallJspBean extends AdminWallJspBean {
 
         
         for (Post pos : listPosts) {
-            //Insertion des URL
-            String input_url = pos.getContenu();
-            String pattStr_url = "(((https?)://)?([\\w\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?)";
-            Pattern p_url = Pattern.compile(pattStr_url);
-            Matcher m_url = p_url.matcher(input_url);
-            StringBuffer bufStr_url = new StringBuffer();
-            boolean flag_url = false;
-
-            while ((flag_url = m_url.find())) {
-                String lien = m_url.group(1);
-                String http = m_url.group(2); 
-                if(http == null){ //Detection du protocole
-                    lien= "http://"+lien;
-                }
-                m_url.appendReplacement(bufStr_url,
-                        "<a href=\""+lien+"\" alt=lien url>" + lien + "</a>");
-            }
-
-            m_url.appendTail(bufStr_url);
-
-            String chaine_url = bufStr_url.toString();
-            pos.setContenu(chaine_url);
-            //
-            //Insertion des liens de filtrages sur les hashtags
-            String input = pos.getContenu();
-            String pattStr = "(#[\\wáàâäãåçéèêëíìîïñóòôöõúùûüıÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜİŸÆŒ]+)";
-            Pattern p = Pattern.compile(pattStr);
-            Matcher m = p.matcher(input);
-            StringBuffer bufStr = new StringBuffer();
-            boolean flag = false;
-
-            while ((flag = m.find())) {
-                String tag = m.group().replace("#", "");
-                String mot = m.group();
-                m.appendReplacement(bufStr,
-                        "<a href=\"jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&tag=" + tag
-                        + "\">" + mot + "</a>");
-            }
-            m.appendTail(bufStr);
-
-            String chaine = bufStr.toString();
-            pos.setContenu(chaine);
-            //
+            
+           //Insertion des URL
+           AdminWallService.activateURL(pos);
+           //Insertion des liens de filtrages sur les hashtags
+           AdminWallService.activateHashtag(pos);
             
         }
 
@@ -259,25 +220,7 @@ public class WallJspBean extends AdminWallJspBean {
         PostHome.create(_post);
 
         /*Detection Hashtags+ajout BDD*/
-        Pattern p = Pattern.compile("#[\\wáàâäãåçéèêëíìîïñóòôöõúùûüıÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜİŸÆŒ]+");
-        Matcher m = p.matcher(_post.getContenu());
-
-        while (m.find()) {
-            String[] tab = new String[2];
-            tab = m.group().split("#", 2);
-            _hashtag = new Hashtag();
-            _hashtag.setTag(tab[1]);
-            HashtagHome.create(_hashtag);
-
-            /*Insertion du Link*/
-            _link = new Link();
-            _link.setPost(_post.getIdPost());
-            _link.setHashtag(_hashtag.getIdHashtag());
-            LinkHome.create(_link);
-
-            _link = null;
-            _hashtag = null;
-        }
+        AdminWallService.detectHashtag(_post);
 
         _post = null;
         addInfo(INFO_POST_CREATED, getLocale());

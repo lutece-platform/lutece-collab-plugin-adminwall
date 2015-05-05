@@ -13,8 +13,9 @@
         
         <div class="box box-solid box-primary">
             <div class="box-header">
-                <img class="avatar avatar-large" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${user_id}">
-                <h4>${post.auteur}, le ${post.date}</h4>
+               <!-- <img class="avatar avatar-large" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${user_id}">-->
+                <img class="avatar avatar-large" title="Avatar" alt="avatar" src="http://lorempixel.com/output/technics-q-c-80-80-4.jpg"/>
+               <h4>${post.auteur}, le ${post.date}</h4>
                 <p class="pull-right">
                     <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&id_post=${post.idPost}"
                            class="btn btn-danger btn-xs" title="#i18n{portal.util.labelDelete}" >

@@ -87,7 +87,7 @@ public final class PostDAO implements IPostDAO
 
         daoUtil.setInt( 1, post.getIdPost(  ) );
         daoUtil.setString( 2, post.getContenu(  ) );
-        daoUtil.setDate( 3, post.getDate(  ) );
+        daoUtil.setTimestamp(3,post.getTimestamp(  ));
         daoUtil.setString( 4, post.getAuteur(  ) );
 
         daoUtil.executeUpdate(  );
@@ -111,7 +111,7 @@ public final class PostDAO implements IPostDAO
             post = new Post(  );
             post.setIdPost( daoUtil.getInt( 1 ) );
             post.setContenu( daoUtil.getString( 2 ) );
-            post.setDate( daoUtil.getDate( 3 ) );
+            post.setTimestamp( daoUtil.getTimestamp( 3 ) );
             post.setAuteur( daoUtil.getString( 4 ) );
         }
 
@@ -142,7 +142,7 @@ public final class PostDAO implements IPostDAO
 
         daoUtil.setInt( 1, post.getIdPost(  ) );
         daoUtil.setString( 2, post.getContenu(  ) );
-        daoUtil.setDate( 3, post.getDate(  ) );
+        daoUtil.setTimestamp( 3, post.getTimestamp(  ) );
         daoUtil.setString( 4, post.getAuteur(  ) );
         daoUtil.setInt( 5, post.getIdPost(  ) );
 
@@ -166,7 +166,7 @@ public final class PostDAO implements IPostDAO
 
             post.setIdPost( daoUtil.getInt( 1 ) );
             post.setContenu( daoUtil.getString( 2 ) );
-            post.setDate( daoUtil.getDate( 3 ) );
+            post.setTimestamp( daoUtil.getTimestamp( 3 ) );
             post.setAuteur( daoUtil.getString( 4 ) );
 
             postList.add( post );

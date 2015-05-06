@@ -52,10 +52,11 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -199,10 +200,13 @@ public class WallJspBean extends AdminWallJspBean {
         _post = (_post != null) ? _post : new Post();
 
         /*Date Automatique*/
-        String strDate = DateUtil.getCurrentDateString(request.getLocale());
-        Date dDate = DateUtil.formatDateSql(strDate, request.getLocale());
-        _post.setDate(dDate);
-
+        Date dDate = new Date();
+        Timestamp time= new Timestamp(dDate.getTime());
+        _post.setTimestamp(time);
+        
+        
+        
+        
         /*Auteur Automatique*/
         AdminUser currentUser = AdminUserService.getAdminUser(request);
 

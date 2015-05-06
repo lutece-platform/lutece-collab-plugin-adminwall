@@ -33,103 +33,102 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
-import org.hibernate.validator.constraints.*;
-
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.validation.constraints.*;
-
+import org.hibernate.validator.constraints.*;
 
 /**
  * This is the business class for the object Post
  */
-public class Post
-{
+public class Post {
+
     // Variables declarations 
     private int _nIdPost;
 
-     @NotEmpty( message = "#i18n{adminwall.validation.post.Contenu.notEmpty}" )
+    @NotEmpty(message = "#i18n{adminwall.validation.post.Contenu.notEmpty}")
     //@NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
-     @Size( max = 255 , message = "#i18n{adminwall.validation.post.Contenu.size}" ) 
+    //@Pattern(regexp="\\w+", message="Voila")
+    @Size(max = 255, message = "#i18n{adminwall.validation.post.Contenu.size}")
     //@Size( max = 255, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strContenu;
-    private Date _dateDate;
+    private Timestamp _tTime;
 
     // @NotEmpty( message = "#i18n{adminwall.validation.post.Auteur.notEmpty}" )
-    @NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
+    @NotEmpty(message = "#i18n{portal.validation.message.notEmpty}")
     // @Size( max = 50 , message = "#i18n{adminwall.validation.post.Auteur.size}" ) 
-    @Size( max = 50, message = "#i18n{portal.validation.message.sizeMax}" )
+    @Size(max = 50, message = "#i18n{portal.validation.message.sizeMax}")
     private String _strAuteur;
 
     /**
      * Returns the IdPost
+     *
      * @return The IdPost
      */
-    public int getIdPost(  )
-    {
+    public int getIdPost() {
         return _nIdPost;
     }
 
     /**
      * Sets the IdPost
+     *
      * @param nIdPost The IdPost
      */
-    public void setIdPost( int nIdPost )
-    {
+    public void setIdPost(int nIdPost) {
         _nIdPost = nIdPost;
     }
 
     /**
      * Returns the Contenu
+     *
      * @return The Contenu
      */
-    public String getContenu(  )
-    {
+    public String getContenu() {
         return _strContenu;
     }
 
     /**
      * Sets the Contenu
+     *
      * @param strContenu The Contenu
      */
-    public void setContenu( String strContenu )
-    {
+    public void setContenu(String strContenu) {
         _strContenu = strContenu;
     }
 
     /**
-     * Returns the Date
-     * @return The Date
+     * Returns the Time
+     *
+     * @return The Time
      */
-    public Date getDate(  )
-    {
-        return _dateDate;
+    public Timestamp getTimestamp() {
+        return _tTime;
     }
 
     /**
-     * Sets the Date
-     * @param dateDate The Date
+     * Sets the Time
+     *
+     * @param tTime The Time
      */
-    public void setDate( Date dateDate )
-    {
-        _dateDate = dateDate;
+    public void setTimestamp(Timestamp tTime) {
+        _tTime = tTime;
     }
 
     /**
      * Returns the Auteur
+     *
      * @return The Auteur
      */
-    public String getAuteur(  )
-    {
+    public String getAuteur() {
         return _strAuteur;
     }
 
     /**
      * Sets the Auteur
+     *
      * @param strAuteur The Auteur
      */
-    public void setAuteur( String strAuteur )
-    {
+    public void setAuteur(String strAuteur) {
         _strAuteur = strAuteur;
     }
 }

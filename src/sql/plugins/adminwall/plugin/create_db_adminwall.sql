@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS adminwall_post;
 CREATE TABLE adminwall_post (		
 id_post int(11) NOT NULL default '0',
 contenu varchar(255) NOT NULL default '',
-date date NOT NULL,
+date datetime NOT NULL,
 auteur varchar(50) NOT NULL default '',
 PRIMARY KEY (id_post)
 )

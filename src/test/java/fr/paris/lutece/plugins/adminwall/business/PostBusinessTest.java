@@ -35,7 +35,7 @@ package fr.paris.lutece.plugins.adminwall.business;
 
 import fr.paris.lutece.test.LuteceTestCase;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 
 public class PostBusinessTest extends LuteceTestCase
@@ -44,8 +44,8 @@ public class PostBusinessTest extends LuteceTestCase
     private final static int IDPOST2 = 2;
     private final static String CONTENU1 = "Contenu1";
     private final static String CONTENU2 = "Contenu2";
-    private final static Date DATE1 = new Date( 1000000L );
-    private final static Date DATE2 = new Date( 2000000L );
+    private final static Timestamp TIMESTAMP1 = new Timestamp( 1000000L );
+    private final static Timestamp TIMESTAMP2 = new Timestamp( 2000000L );
     private final static String AUTEUR1 = "Auteur1";
     private final static String AUTEUR2 = "Auteur2";
 
@@ -55,7 +55,7 @@ public class PostBusinessTest extends LuteceTestCase
         Post post = new Post(  );
         post.setIdPost( IDPOST1 );
         post.setContenu( CONTENU1 );
-        post.setDate( DATE1 );
+        post.setTimestamp( TIMESTAMP1 );
         post.setAuteur( AUTEUR1 );
 
         // Create test
@@ -64,19 +64,19 @@ public class PostBusinessTest extends LuteceTestCase
         Post postStored = PostHome.findByPrimaryKey( post.getIdPost(  ) );
         assertEquals( postStored.getIdPost(  ), post.getIdPost(  ) );
         assertEquals( postStored.getContenu(  ), post.getContenu(  ) );
-        assertEquals( postStored.getDate(  ), post.getDate(  ) );
+        assertEquals( postStored.getTimestamp(  ), post.getTimestamp(  ) );
         assertEquals( postStored.getAuteur(  ), post.getAuteur(  ) );
 
         // Update test
         post.setIdPost( IDPOST2 );
         post.setContenu( CONTENU2 );
-        post.setDate( DATE2 );
+        post.setTimestamp( TIMESTAMP2 );
         post.setAuteur( AUTEUR2 );
         PostHome.update( post );
         postStored = PostHome.findByPrimaryKey( post.getIdPost(  ) );
         assertEquals( postStored.getIdPost(  ), post.getIdPost(  ) );
         assertEquals( postStored.getContenu(  ), post.getContenu(  ) );
-        assertEquals( postStored.getDate(  ), post.getDate(  ) );
+        assertEquals( postStored.getTimestamp(  ), post.getTimestamp(  ) );
         assertEquals( postStored.getAuteur(  ), post.getAuteur(  ) );
 
         // List test

@@ -147,14 +147,13 @@ public class WallJspBean extends AdminWallJspBean {
             Collections.reverse(listPosts);
         }
 
-        
         for (Post pos : listPosts) {
             
            //Insertion des URL
            AdminWallService.activateURL(pos);
            //Insertion des liens de filtrages sur les hashtags
            AdminWallService.activateHashtag(pos);
-            
+                 
         }
 
         // PAGINATOR

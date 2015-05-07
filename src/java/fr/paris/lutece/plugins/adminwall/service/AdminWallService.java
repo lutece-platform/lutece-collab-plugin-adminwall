@@ -36,7 +36,7 @@ public final class AdminWallService {
                     lien= "http://"+lien;
                 }
                 m_url.appendReplacement(bufStr_url,
-                        "<a href=\""+lien+"\" alt=lien url>" + lien + "</a>");
+                        "<a href=\""+lien+"\" alt=lien url target=\"_blank\">" + lien + "</a>");
             }
 
             m_url.appendTail(bufStr_url);

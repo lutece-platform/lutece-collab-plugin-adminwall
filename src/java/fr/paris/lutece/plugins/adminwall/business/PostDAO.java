@@ -47,11 +47,11 @@ public final class PostDAO implements IPostDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_post ) FROM adminwall_post";
-    private static final String SQL_QUERY_SELECT = "SELECT id_post, contenu, date, auteur FROM adminwall_post WHERE id_post = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO adminwall_post ( id_post, contenu, date, auteur ) VALUES ( ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_post, contenu, date, id_auteur, auteur FROM adminwall_post WHERE id_post = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO adminwall_post ( id_post, contenu, date, id_auteur, auteur ) VALUES ( ?, ?, ?, ? ,?) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM adminwall_post WHERE id_post = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE adminwall_post SET id_post = ?, contenu = ?, date = ?, auteur = ? WHERE id_post = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_post, contenu, date, auteur FROM adminwall_post ORDER BY id_post DESC";
+    private static final String SQL_QUERY_UPDATE = "UPDATE adminwall_post SET id_post = ?, contenu = ?, date = ?, id_auteur= ?, auteur = ? WHERE id_post = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_post, contenu, date, id_auteur, auteur FROM adminwall_post ORDER BY id_post DESC";
 
     /**
      * Generates a new primary key
@@ -88,7 +88,8 @@ public final class PostDAO implements IPostDAO
         daoUtil.setInt( 1, post.getIdPost(  ) );
         daoUtil.setString( 2, post.getContenu(  ) );
         daoUtil.setTimestamp(3,post.getTimestamp(  ));
-        daoUtil.setString( 4, post.getAuteur(  ) );
+        daoUtil.setInt( 4, post.getIdAuteur(  ) );
+        daoUtil.setString( 5, post.getAuteur(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -112,7 +113,8 @@ public final class PostDAO implements IPostDAO
             post.setIdPost( daoUtil.getInt( 1 ) );
             post.setContenu( daoUtil.getString( 2 ) );
             post.setTimestamp( daoUtil.getTimestamp( 3 ) );
-            post.setAuteur( daoUtil.getString( 4 ) );
+            post.setIdAuteur( daoUtil.getInt( 4 ) );
+            post.setAuteur( daoUtil.getString( 5 ) );
         }
 
         daoUtil.free(  );
@@ -144,7 +146,8 @@ public final class PostDAO implements IPostDAO
         daoUtil.setString( 2, post.getContenu(  ) );
         daoUtil.setTimestamp( 3, post.getTimestamp(  ) );
         daoUtil.setString( 4, post.getAuteur(  ) );
-        daoUtil.setInt( 5, post.getIdPost(  ) );
+        daoUtil.setInt( 5, post.getIdAuteur(  ) );
+        daoUtil.setInt( 6, post.getIdPost(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -167,7 +170,8 @@ public final class PostDAO implements IPostDAO
             post.setIdPost( daoUtil.getInt( 1 ) );
             post.setContenu( daoUtil.getString( 2 ) );
             post.setTimestamp( daoUtil.getTimestamp( 3 ) );
-            post.setAuteur( daoUtil.getString( 4 ) );
+            post.setIdAuteur( daoUtil.getInt( 4 ) );
+            post.setAuteur( daoUtil.getString( 5 ) );
 
             postList.add( post );
         }

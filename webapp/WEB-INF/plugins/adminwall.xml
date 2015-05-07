@@ -16,9 +16,13 @@
     
      <!-- Feuilles de style CSS spécifiques éventuelles -->
     <css-stylesheets>
-        <css-stylesheets-scope>admin</css-stylesheets-scope>
-         <css-stylesheet>css/plugins/adminwall/adminwall.css</css-stylesheet>
+      
     </css-stylesheets>
+    
+    <!-- Feuilles de style CSS admin spécifiques éventuelles -->
+    <admin-css-stylesheets>
+        <admin-css-stylesheet>css/admin/AdminLTEv2.css</admin-css-stylesheet>
+    </admin-css-stylesheets>
     
     
     <!-- Admin features parameters -->

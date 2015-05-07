@@ -1,88 +1,16 @@
 
-<!--TEMPORAIRE -->
-<style>
-    .direct-chat-messages {
-    height: 250px;
-    padding: 10px;
-    transform: translate(0px, 0px);
-}
-
-.direct-chat-info {
-    display: block;
-    font-size: 12px;
-    margin-bottom: 2px;
-}
-.direct-chat-name {
-    font-weight: 600;
-}
-.direct-chat-timestamp {
-    color: #999;
-}
-
-.direct-chat-msg, .direct-chat-text {
-    display: block;
-}
-
-.direct-chat-msg {
-    margin-bottom: 10px;
-}
-
-.direct-chat-msg::after {
-    content: " ";
-    display: table;
-  	clear: both;
-}
-
-.direct-chat-text {
-    background: none repeat scroll 0 0 #d2d6de;
-    border: 1px solid #d2d6de;
-    border-radius: 5px;
-    color: #444;
-    margin: 5px 0 0 50px;
-    padding: 5px 10px;
-    position: relative;
-}
-.direct-chat-text::before {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: transparent #d2d6de transparent transparent;
-    border-image: none;
-    border-style: solid;
-    border-width: medium;
-    content: " ";
-    height: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 100%;
-    top: 15px;
-    width: 0;
-}
-
-.direct-chat-text::before {
-    border-width: 6px;
-    margin-top: -6px;
-}
-
-.direct-chat-img {
-    border-radius: 50%;
-    float: left;
-    height: 40px;
-    width: 40px;
-}
-</style>
-<!---->
 <div class="row-fluid" >
 
-    <div class="span8">
+    <div class="span9">
 
         <@messages infos=infos />
-
+        <div class="pull-left">
+            <a href="jsp/admin/plugins/adminwall/ManageWall.jsp">Liste des posts</a>
+        </div>
         <@paginationAdmin paginator=paginator combo=1 />
 
         <input type="hidden" id="id_post" name="id_post"  />
-        
+
         <!--Liste des Posts-->
         <div class="direct-chat-messages">
             <#list post_list as post >
@@ -95,11 +23,18 @@
                 <!--Infos Post-->
                 <div class="direct-chat-info clearfix">
                     <span class="direct-chat-name pull-left">${post.auteur}</span>
-                    <span class="direct-chat-timestamp pull-right">${post.timestamp}</span>
+                    <span class="direct-chat-timestamp pull-right">${post.timestamp}
+                        <#if post.idAuteur == user_id>
+                        <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&id_post=${post.idPost}" class="btn btn-danger btn-xs" title="#i18n{portal.util.labelDelete}" >
+                            <i class="icon-trash icon-white"></i>
+                        </a>
+                        </#if>
+                    </span>
                 </div>
 
                 <!--Avatar-->
-                <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${user_id}"/>
+                <img class="direct-chat-img" title="Avatar" alt="avatar" src="http://screenshots.en.sftcdn.net/en/scrn/107000/107191/mozilla-firefox-10-100x100.png" />
+                <!--<img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${user_id}"/>-->
 
                 <!--Contenu-->
                 <div class="direct-chat-text">
@@ -113,7 +48,7 @@
         </div>
         <@paginationAdmin paginator=paginator />
     </div>
-    <div class="span4" >
+    <div class="span3" >
         <#include "create_post.html" />
     </div>
 </div>

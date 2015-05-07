@@ -59,6 +59,7 @@ public class Post {
     // @Size( max = 50 , message = "#i18n{adminwall.validation.post.Auteur.size}" ) 
     @Size(max = 50, message = "#i18n{portal.validation.message.sizeMax}")
     private String _strAuteur;
+    private int _nIdAuteur;
 
     /**
      * Returns the IdPost
@@ -114,6 +115,24 @@ public class Post {
         _tTime = tTime;
     }
 
+     /**
+     * Returns the IdAuteur
+     *
+     * @return The IdAuteur
+     */
+    public int getIdAuteur() {
+        return _nIdAuteur;
+    }
+
+    /**
+     * Sets the IdAuteur
+     *
+     * @param nIdAuteur The IdAuteur
+     */
+    public void setIdAuteur(int nIdAuteur) {
+        _nIdAuteur = nIdAuteur;
+    }
+    
     /**
      * Returns the Auteur
      *

@@ -84,7 +84,10 @@ public final class HashtagDAO implements IHashtagDAO {
         daoUtilV.setString(1, hashtag.getTag());
         daoUtilV.executeQuery();
 
-        if (!(daoUtilV.next())) {
+        if (daoUtilV.next()) {
+            hashtag.setIdHashtag(daoUtilV.getInt(1));
+        } else {
+
             DAOUtil daoUtil = new DAOUtil(SQL_QUERY_INSERT, plugin);
 
             hashtag.setIdHashtag(newPrimaryKey(plugin));
@@ -94,8 +97,6 @@ public final class HashtagDAO implements IHashtagDAO {
 
             daoUtil.executeUpdate();
             daoUtil.free();
-        } else {
-            hashtag.setIdHashtag(daoUtilV.getInt(1));
         }
 
         daoUtilV.free();
@@ -166,7 +167,7 @@ public final class HashtagDAO implements IHashtagDAO {
 
             hashtagList.add(hashtag);
         }
-
+        
         daoUtil.free();
 
         return hashtagList;

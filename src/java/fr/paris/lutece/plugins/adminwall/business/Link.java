@@ -33,11 +33,7 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
-import org.hibernate.validator.constraints.*;
 
-import java.sql.Date;
-
-import javax.validation.constraints.*;
 
 
 /**

@@ -34,9 +34,8 @@
 package fr.paris.lutece.plugins.adminwall.business;
 
 import java.sql.Timestamp;
-
-import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.*;
+import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * This is the business class for the object Post
@@ -115,7 +114,7 @@ public class Post {
         _tTime = tTime;
     }
 
-     /**
+    /**
      * Returns the IdAuteur
      *
      * @return The IdAuteur
@@ -132,7 +131,7 @@ public class Post {
     public void setIdAuteur(int nIdAuteur) {
         _nIdAuteur = nIdAuteur;
     }
-    
+
     /**
      * Returns the Auteur
      *

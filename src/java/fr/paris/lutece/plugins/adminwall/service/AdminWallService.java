@@ -20,6 +20,8 @@ import java.util.regex.Pattern;
  */
 public final class AdminWallService {
     
+    
+    
     //Active les URL dans les posts
     public static void activateURL(Post post){
             String input_url = post.getContenu();

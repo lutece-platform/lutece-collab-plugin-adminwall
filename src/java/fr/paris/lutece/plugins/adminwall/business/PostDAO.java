@@ -87,7 +87,7 @@ public final class PostDAO implements IPostDAO
 
         daoUtil.setInt( 1, post.getIdPost(  ) );
         daoUtil.setString( 2, post.getContenu(  ) );
-        daoUtil.setTimestamp(3,post.getTimestamp(  ));
+        daoUtil.setTimestamp( 3, post.getTimestamp(  ) );
         daoUtil.setInt( 4, post.getIdAuteur(  ) );
         daoUtil.setString( 5, post.getAuteur(  ) );
 

@@ -34,20 +34,22 @@
 package fr.paris.lutece.plugins.adminwall.business;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.validation.constraints.Size;
+
 
 /**
  * This is the business class for the object Hashtag
  */
-public class Hashtag {
-
+public class Hashtag
+{
     // Variables declarations 
     private int _nIdHashtag;
 
     // @NotEmpty( message = "#i18n{adminwall.validation.hashtag.Tag.notEmpty}" )
-    @NotEmpty(message = "#i18n{portal.validation.message.notEmpty}")
+    @NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
     // @Size( max = 50 , message = "#i18n{adminwall.validation.hashtag.Tag.size}" ) 
-    @Size(max = 50, message = "#i18n{portal.validation.message.sizeMax}")
+    @Size( max = 50, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strTag;
 
     /**
@@ -55,7 +57,8 @@ public class Hashtag {
      *
      * @return The IdHashtag
      */
-    public int getIdHashtag() {
+    public int getIdHashtag(  )
+    {
         return _nIdHashtag;
     }
 
@@ -64,7 +67,8 @@ public class Hashtag {
      *
      * @param nIdHashtag The IdHashtag
      */
-    public void setIdHashtag(int nIdHashtag) {
+    public void setIdHashtag( int nIdHashtag )
+    {
         _nIdHashtag = nIdHashtag;
     }
 
@@ -73,7 +77,8 @@ public class Hashtag {
      *
      * @return The Tag
      */
-    public String getTag() {
+    public String getTag(  )
+    {
         return _strTag;
     }
 
@@ -82,7 +87,8 @@ public class Hashtag {
      *
      * @param strTag The Tag
      */
-    public void setTag(String strTag) {
+    public void setTag( String strTag )
+    {
         _strTag = strTag;
     }
 }

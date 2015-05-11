@@ -52,7 +52,9 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
+
 import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,13 +66,14 @@ import java.util.regex.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 /**
  * This class provides the user interface to manage Wall features ( manage,
  * create, modify, remove )
  */
-@Controller(controllerJsp = "ManageWall.jsp", controllerPath = "jsp/admin/plugins/adminwall/", right = "ADMINWALL_ACCESS")
-public class WallJspBean extends AdminWallJspBean {
-
+@Controller( controllerJsp = "ManageWall.jsp", controllerPath = "jsp/admin/plugins/adminwall/", right = "ADMINWALL_ACCESS" )
+public class WallJspBean extends AdminWallJspBean
+{
     ////////////////////////////////////////////////////////////////////////////
     // Constants
     // templates
@@ -114,62 +117,69 @@ public class WallJspBean extends AdminWallJspBean {
     private Hashtag _hashtag;
     private Link _link;
 
-    @View(value = VIEW_MANAGE_POSTS, defaultView = true)
-    public String getManagePosts(HttpServletRequest request) {
-
-        Collection<Post> collectionPosts = new ArrayList<Post>();
+    @View( value = VIEW_MANAGE_POSTS, defaultView = true )
+    public String getManagePosts( HttpServletRequest request )
+    {
+        Collection<Post> collectionPosts = new ArrayList<Post>(  );
         List<Post> listPosts = (List<Post>) collectionPosts;
 
         //PAGINATOR
-        _strCurrentPageIndex = Paginator.getPageIndex(request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex);
-        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt(PROPERTY_DEFAULT_LIST_POST_PER_PAGE, 50);
-        _nItemsPerPage = Paginator.getItemsPerPage(request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
-                _nDefaultItemsPerPage);
+        _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
+        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( PROPERTY_DEFAULT_LIST_POST_PER_PAGE, 50 );
+        _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
+                _nDefaultItemsPerPage );
 
         //URL
-        UrlItem url = new UrlItem(JSP_MANAGE_WALL);
-        String strUrl = url.getUrl();
+        UrlItem url = new UrlItem( JSP_MANAGE_WALL );
+        String strUrl = url.getUrl(  );
 
-        String param_tag = request.getParameter(PARAMETER_TAG);
+        String param_tag = request.getParameter( PARAMETER_TAG );
 
-        if (param_tag == null) {//SANS PARAMETRE/FILTRAGE
-            listPosts = (List<Post>) PostHome.getPostsList();
-        } else {//AVEC PARAMETRE/FILTRAGE
-            int id_hashtag = HashtagHome.getId(param_tag);
-            List<Link> listLinks = (List<Link>) LinkHome.getLinksListTag(id_hashtag);
+        if ( param_tag == null )
+        { //SANS PARAMETRE/FILTRAGE
+            listPosts = (List<Post>) PostHome.getPostsList(  );
+        }
+        else
+        { //AVEC PARAMETRE/FILTRAGE
+
+            int id_hashtag = HashtagHome.getId( param_tag );
+            List<Link> listLinks = (List<Link>) LinkHome.getLinksListTag( id_hashtag );
 
             //Creation de la liste de la liste de Posts avec la liste de Links
-            for (Link link : listLinks) {
-                int id_post = link.getPost();
-                Post pos = PostHome.findByPrimaryKey(id_post);
-                listPosts.add(pos);
+            for ( Link link : listLinks )
+            {
+                int id_post = link.getPost(  );
+                Post pos = PostHome.findByPrimaryKey( id_post );
+                listPosts.add( pos );
             }
-            Collections.reverse(listPosts);
+
+            Collections.reverse( listPosts );
         }
 
-        for (Post pos : listPosts) {
-            
-           //Insertion des URL
-           AdminWallService.activateURL(pos);
-           //Insertion des liens de filtrages sur les hashtags
-           AdminWallService.activateHashtag(pos);
-                 
+        for ( Post pos : listPosts )
+        {
+            //Insertion des URL
+            AdminWallService.activateURL( pos );
+            //Insertion des liens de filtrages sur les hashtags
+            AdminWallService.activateHashtag( pos );
         }
 
         // PAGINATOR
-        LocalizedPaginator paginator = new LocalizedPaginator(listPosts, _nItemsPerPage, strUrl, PARAMETER_PAGE_INDEX,
-                _strCurrentPageIndex, getLocale());
-        //Infos User
-        AdminUser currentUser = AdminUserService.getAdminUser(request);
-        int user_id = currentUser.getUserId();
-        //Model
-        Map<String, Object> model = getModel();
-        model.put(MARK_USER_ID, user_id);
-        model.put(MARK_NB_ITEMS_PER_PAGE, "" + _nItemsPerPage);
-        model.put(MARK_PAGINATOR, paginator);
-        model.put(MARK_POST_LIST, paginator.getPageItems());
+        LocalizedPaginator paginator = new LocalizedPaginator( listPosts, _nItemsPerPage, strUrl, PARAMETER_PAGE_INDEX,
+                _strCurrentPageIndex, getLocale(  ) );
 
-        return getPage(PROPERTY_PAGE_TITLE_MANAGE_POSTS, TEMPLATE_MANAGE_POST, model);
+        //Infos User
+        AdminUser currentUser = AdminUserService.getAdminUser( request );
+        int user_id = currentUser.getUserId(  );
+
+        //Model
+        Map<String, Object> model = getModel(  );
+        model.put( MARK_USER_ID, user_id );
+        model.put( MARK_NB_ITEMS_PER_PAGE, "" + _nItemsPerPage );
+        model.put( MARK_PAGINATOR, paginator );
+        model.put( MARK_POST_LIST, paginator.getPageItems(  ) );
+
+        return getPage( PROPERTY_PAGE_TITLE_MANAGE_POSTS, TEMPLATE_MANAGE_POST, model );
     }
 
     /**
@@ -178,14 +188,15 @@ public class WallJspBean extends AdminWallJspBean {
      * @param request The Http request
      * @return the html code of the post form
      */
-    @View(VIEW_CREATE_POST)
-    public String getCreatePost(HttpServletRequest request) {
-        _post = (_post != null) ? _post : new Post();
+    @View( VIEW_CREATE_POST )
+    public String getCreatePost( HttpServletRequest request )
+    {
+        _post = ( _post != null ) ? _post : new Post(  );
 
-        Map<String, Object> model = getModel();
-        model.put(MARK_POST, _post);
+        Map<String, Object> model = getModel(  );
+        model.put( MARK_POST, _post );
 
-        return getPage(PROPERTY_PAGE_TITLE_CREATE_POST, TEMPLATE_CREATE_POST, model);
+        return getPage( PROPERTY_PAGE_TITLE_CREATE_POST, TEMPLATE_CREATE_POST, model );
     }
 
     /**
@@ -194,41 +205,40 @@ public class WallJspBean extends AdminWallJspBean {
      * @param request The Http Request
      * @return The Jsp URL of the process result
      */
-    @Action(ACTION_CREATE_POST)
-    public String doCreatePost(HttpServletRequest request) {
-        _post = (_post != null) ? _post : new Post();
+    @Action( ACTION_CREATE_POST )
+    public String doCreatePost( HttpServletRequest request )
+    {
+        _post = ( _post != null ) ? _post : new Post(  );
 
         /*Date Automatique*/
-        Date dDate = new Date();
-        Timestamp time= new Timestamp(dDate.getTime());
-        _post.setTimestamp(time);
-        
-        
-        
-        
+        Date dDate = new Date(  );
+        Timestamp time = new Timestamp( dDate.getTime(  ) );
+        _post.setTimestamp( time );
+
         /*Auteur Automatique*/
-        AdminUser currentUser = AdminUserService.getAdminUser(request);
+        AdminUser currentUser = AdminUserService.getAdminUser( request );
 
-        String prenom = currentUser.getFirstName();
-        String nom = currentUser.getLastName();
-        _post.setAuteur(prenom + " " + nom);
+        String prenom = currentUser.getFirstName(  );
+        String nom = currentUser.getLastName(  );
+        _post.setAuteur( prenom + " " + nom );
 
-        populate(_post, request);
+        populate( _post, request );
 
         // Check constraints
-        if (!validateBean(_post, VALIDATION_ATTRIBUTES_PREFIX)) {
-            return redirectView(request, VIEW_MANAGE_POSTS);
+        if ( !validateBean( _post, VALIDATION_ATTRIBUTES_PREFIX ) )
+        {
+            return redirectView( request, VIEW_MANAGE_POSTS );
         }
 
-        PostHome.create(_post);
+        PostHome.create( _post );
 
         /*Detection Hashtags+ajout BDD*/
-        AdminWallService.detectHashtag(_post);
+        AdminWallService.detectHashtag( _post );
 
         _post = null;
-        addInfo(INFO_POST_CREATED, getLocale());
+        addInfo( INFO_POST_CREATED, getLocale(  ) );
 
-        return redirectView(request, VIEW_MANAGE_POSTS);
+        return redirectView( request, VIEW_MANAGE_POSTS );
     }
 
     /**
@@ -238,16 +248,17 @@ public class WallJspBean extends AdminWallJspBean {
      * @param request The Http request
      * @return the html code to confirm
      */
-    @Action(ACTION_CONFIRM_REMOVE_POST)
-    public String getConfirmRemovePost(HttpServletRequest request) {
-        int nId = Integer.parseInt(request.getParameter(PARAMETER_ID_POST));
-        UrlItem url = new UrlItem(getActionUrl(ACTION_REMOVE_POST));
-        url.addParameter(PARAMETER_ID_POST, nId);
+    @Action( ACTION_CONFIRM_REMOVE_POST )
+    public String getConfirmRemovePost( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_POST ) );
+        UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_POST ) );
+        url.addParameter( PARAMETER_ID_POST, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl(request, MESSAGE_CONFIRM_REMOVE_POST, url.getUrl(),
-                AdminMessage.TYPE_CONFIRMATION);
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_POST, url.getUrl(  ),
+                AdminMessage.TYPE_CONFIRMATION );
 
-        return redirect(request, strMessageUrl);
+        return redirect( request, strMessageUrl );
     }
 
     /**
@@ -256,14 +267,14 @@ public class WallJspBean extends AdminWallJspBean {
      * @param request The Http request
      * @return the jsp URL to display the form to manage posts
      */
-    @Action(ACTION_REMOVE_POST)
-    public String doRemovePost(HttpServletRequest request) {
-        int nId = Integer.parseInt(request.getParameter(PARAMETER_ID_POST));
-        PostHome.remove(nId);
-        LinkHome.remove(nId);
-        addInfo(INFO_POST_REMOVED, getLocale());
+    @Action( ACTION_REMOVE_POST )
+    public String doRemovePost( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_POST ) );
+        PostHome.remove( nId );
+        LinkHome.remove( nId );
+        addInfo( INFO_POST_REMOVED, getLocale(  ) );
 
-        return redirectView(request, VIEW_MANAGE_POSTS);
+        return redirectView( request, VIEW_MANAGE_POSTS );
     }
-
 }

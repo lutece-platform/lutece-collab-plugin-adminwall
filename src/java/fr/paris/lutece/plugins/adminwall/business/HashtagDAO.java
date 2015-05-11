@@ -39,11 +39,12 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 /**
  * This class provides Data Access methods for Hashtag objects
  */
-public final class HashtagDAO implements IHashtagDAO {
-
+public final class HashtagDAO implements IHashtagDAO
+{
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_hashtag ) FROM adminwall_hashtag";
     private static final String SQL_QUERY_SELECT = "SELECT id_hashtag, tag FROM adminwall_hashtag WHERE id_hashtag = ?";
@@ -59,17 +60,19 @@ public final class HashtagDAO implements IHashtagDAO {
      * @param plugin The Plugin
      * @return The new primary key
      */
-    public int newPrimaryKey(Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_NEW_PK, plugin);
-        daoUtil.executeQuery();
+    public int newPrimaryKey( Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
+        daoUtil.executeQuery(  );
 
         int nKey = 1;
 
-        if (daoUtil.next()) {
-            nKey = daoUtil.getInt(1) + 1;
+        if ( daoUtil.next(  ) )
+        {
+            nKey = daoUtil.getInt( 1 ) + 1;
         }
 
-        daoUtil.free();
+        daoUtil.free(  );
 
         return nKey;
     }
@@ -78,48 +81,53 @@ public final class HashtagDAO implements IHashtagDAO {
      * {@inheritDoc }
      */
     @Override
-    public void insert(Hashtag hashtag, Plugin plugin) {
+    public void insert( Hashtag hashtag, Plugin plugin )
+    {
         /*Verification -> pas de doublon*/
-        DAOUtil daoUtilV = new DAOUtil(SQL_QUERY_SELECT_ID);
-        daoUtilV.setString(1, hashtag.getTag());
-        daoUtilV.executeQuery();
+        DAOUtil daoUtilV = new DAOUtil( SQL_QUERY_SELECT_ID );
+        daoUtilV.setString( 1, hashtag.getTag(  ) );
+        daoUtilV.executeQuery(  );
 
-        if (daoUtilV.next()) {
-            hashtag.setIdHashtag(daoUtilV.getInt(1));
-        } else {
+        if ( daoUtilV.next(  ) )
+        {
+            hashtag.setIdHashtag( daoUtilV.getInt( 1 ) );
+        }
+        else
+        {
+            DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
-            DAOUtil daoUtil = new DAOUtil(SQL_QUERY_INSERT, plugin);
+            hashtag.setIdHashtag( newPrimaryKey( plugin ) );
 
-            hashtag.setIdHashtag(newPrimaryKey(plugin));
+            daoUtil.setInt( 1, hashtag.getIdHashtag(  ) );
+            daoUtil.setString( 2, hashtag.getTag(  ) );
 
-            daoUtil.setInt(1, hashtag.getIdHashtag());
-            daoUtil.setString(2, hashtag.getTag());
-
-            daoUtil.executeUpdate();
-            daoUtil.free();
+            daoUtil.executeUpdate(  );
+            daoUtil.free(  );
         }
 
-        daoUtilV.free();
+        daoUtilV.free(  );
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public Hashtag load(int nKey, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECT, plugin);
-        daoUtil.setInt(1, nKey);
-        daoUtil.executeQuery();
+    public Hashtag load( int nKey, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+        daoUtil.setInt( 1, nKey );
+        daoUtil.executeQuery(  );
 
         Hashtag hashtag = null;
 
-        if (daoUtil.next()) {
-            hashtag = new Hashtag();
-            hashtag.setIdHashtag(daoUtil.getInt(1));
-            hashtag.setTag(daoUtil.getString(2));
+        if ( daoUtil.next(  ) )
+        {
+            hashtag = new Hashtag(  );
+            hashtag.setIdHashtag( daoUtil.getInt( 1 ) );
+            hashtag.setTag( daoUtil.getString( 2 ) );
         }
 
-        daoUtil.free();
+        daoUtil.free(  );
 
         return hashtag;
     }
@@ -128,47 +136,51 @@ public final class HashtagDAO implements IHashtagDAO {
      * {@inheritDoc }
      */
     @Override
-    public void delete(int nHashtagId, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_DELETE, plugin);
-        daoUtil.setInt(1, nHashtagId);
-        daoUtil.executeUpdate();
-        daoUtil.free();
+    public void delete( int nHashtagId, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
+        daoUtil.setInt( 1, nHashtagId );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public void store(Hashtag hashtag, Plugin plugin) {
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_UPDATE, plugin);
+    public void store( Hashtag hashtag, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-        daoUtil.setInt(1, hashtag.getIdHashtag());
-        daoUtil.setString(2, hashtag.getTag());
-        daoUtil.setInt(3, hashtag.getIdHashtag());
+        daoUtil.setInt( 1, hashtag.getIdHashtag(  ) );
+        daoUtil.setString( 2, hashtag.getTag(  ) );
+        daoUtil.setInt( 3, hashtag.getIdHashtag(  ) );
 
-        daoUtil.executeUpdate();
-        daoUtil.free();
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public Collection<Hashtag> selectHashtagsList(Plugin plugin) {
-        Collection<Hashtag> hashtagList = new ArrayList<Hashtag>();
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECTALL, plugin);
-        daoUtil.executeQuery();
+    public Collection<Hashtag> selectHashtagsList( Plugin plugin )
+    {
+        Collection<Hashtag> hashtagList = new ArrayList<Hashtag>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        daoUtil.executeQuery(  );
 
-        while (daoUtil.next()) {
-            Hashtag hashtag = new Hashtag();
+        while ( daoUtil.next(  ) )
+        {
+            Hashtag hashtag = new Hashtag(  );
 
-            hashtag.setIdHashtag(daoUtil.getInt(1));
-            hashtag.setTag(daoUtil.getString(2));
+            hashtag.setIdHashtag( daoUtil.getInt( 1 ) );
+            hashtag.setTag( daoUtil.getString( 2 ) );
 
-            hashtagList.add(hashtag);
+            hashtagList.add( hashtag );
         }
-        
-        daoUtil.free();
+
+        daoUtil.free(  );
 
         return hashtagList;
     }
@@ -177,16 +189,17 @@ public final class HashtagDAO implements IHashtagDAO {
      * {@inheritDoc }
      */
     @Override
-    public int selectId(String tag, Plugin plugin) {
+    public int selectId( String tag, Plugin plugin )
+    {
         int id_hashtag;
-        DAOUtil daoUtil = new DAOUtil(SQL_QUERY_SELECT_ID, plugin);
-        daoUtil.setString(1, tag);
-        daoUtil.executeQuery();
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin );
+        daoUtil.setString( 1, tag );
+        daoUtil.executeQuery(  );
 
-        daoUtil.next();
-        id_hashtag = daoUtil.getInt(1); //BUG
+        daoUtil.next(  );
+        id_hashtag = daoUtil.getInt( 1 ); //BUG
 
-        daoUtil.free();
+        daoUtil.free(  );
 
         return id_hashtag;
     }

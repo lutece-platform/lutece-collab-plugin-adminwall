@@ -34,8 +34,6 @@
 package fr.paris.lutece.plugins.adminwall.business;
 
 
-
-
 /**
  * This is the business class for the object Link
  */

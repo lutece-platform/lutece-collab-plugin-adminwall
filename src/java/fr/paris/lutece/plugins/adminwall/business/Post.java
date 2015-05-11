@@ -33,30 +33,32 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
-import java.sql.Timestamp;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.sql.Timestamp;
+
 import javax.validation.constraints.Size;
+
 
 /**
  * This is the business class for the object Post
  */
-public class Post {
-
+public class Post
+{
     // Variables declarations 
     private int _nIdPost;
-
-    @NotEmpty(message = "#i18n{adminwall.validation.post.Contenu.notEmpty}")
+    @NotEmpty( message = "#i18n{adminwall.validation.post.Contenu.notEmpty}" )
     //@NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
     //@Pattern(regexp="\\w+", message="Voila")
-    @Size(max = 255, message = "#i18n{adminwall.validation.post.Contenu.size}")
+    @Size( max = 255, message = "#i18n{adminwall.validation.post.Contenu.size}" )
     //@Size( max = 255, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strContenu;
     private Timestamp _tTime;
 
     // @NotEmpty( message = "#i18n{adminwall.validation.post.Auteur.notEmpty}" )
-    @NotEmpty(message = "#i18n{portal.validation.message.notEmpty}")
+    @NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
     // @Size( max = 50 , message = "#i18n{adminwall.validation.post.Auteur.size}" ) 
-    @Size(max = 50, message = "#i18n{portal.validation.message.sizeMax}")
+    @Size( max = 50, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strAuteur;
     private int _nIdAuteur;
 
@@ -65,7 +67,8 @@ public class Post {
      *
      * @return The IdPost
      */
-    public int getIdPost() {
+    public int getIdPost(  )
+    {
         return _nIdPost;
     }
 
@@ -74,7 +77,8 @@ public class Post {
      *
      * @param nIdPost The IdPost
      */
-    public void setIdPost(int nIdPost) {
+    public void setIdPost( int nIdPost )
+    {
         _nIdPost = nIdPost;
     }
 
@@ -83,7 +87,8 @@ public class Post {
      *
      * @return The Contenu
      */
-    public String getContenu() {
+    public String getContenu(  )
+    {
         return _strContenu;
     }
 
@@ -92,7 +97,8 @@ public class Post {
      *
      * @param strContenu The Contenu
      */
-    public void setContenu(String strContenu) {
+    public void setContenu( String strContenu )
+    {
         _strContenu = strContenu;
     }
 
@@ -101,7 +107,8 @@ public class Post {
      *
      * @return The Time
      */
-    public Timestamp getTimestamp() {
+    public Timestamp getTimestamp(  )
+    {
         return _tTime;
     }
 
@@ -110,7 +117,8 @@ public class Post {
      *
      * @param tTime The Time
      */
-    public void setTimestamp(Timestamp tTime) {
+    public void setTimestamp( Timestamp tTime )
+    {
         _tTime = tTime;
     }
 
@@ -119,7 +127,8 @@ public class Post {
      *
      * @return The IdAuteur
      */
-    public int getIdAuteur() {
+    public int getIdAuteur(  )
+    {
         return _nIdAuteur;
     }
 
@@ -128,7 +137,8 @@ public class Post {
      *
      * @param nIdAuteur The IdAuteur
      */
-    public void setIdAuteur(int nIdAuteur) {
+    public void setIdAuteur( int nIdAuteur )
+    {
         _nIdAuteur = nIdAuteur;
     }
 
@@ -137,7 +147,8 @@ public class Post {
      *
      * @return The Auteur
      */
-    public String getAuteur() {
+    public String getAuteur(  )
+    {
         return _strAuteur;
     }
 
@@ -146,7 +157,8 @@ public class Post {
      *
      * @param strAuteur The Auteur
      */
-    public void setAuteur(String strAuteur) {
+    public void setAuteur( String strAuteur )
+    {
         _strAuteur = strAuteur;
     }
 }

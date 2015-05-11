@@ -82,5 +82,13 @@ public interface ILinkDAO
      */
     Collection<Link> selectLinksList( Plugin plugin );
 
+    /**
+     *Load the data of all the link objects whose hashtag is specified in parameter and returns them as a collection
+     * @param hashtag The hashtag
+     * @param plugin the Plugin
+     * @return The collection of Link
+    */
+    
+    
     Collection<Link> selectLinksListTag( int hashtag, Plugin plugin );
 }

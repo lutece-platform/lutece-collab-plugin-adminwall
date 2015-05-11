@@ -82,5 +82,12 @@ public interface IHashtagDAO
      */
     Collection<Hashtag> selectHashtagsList( Plugin plugin );
 
+    /**
+     * Returns the identifier of the Hashtag whose tag is specified in parameter
+     * @param tag the Tag
+     * @param plugin the Plugin
+     * @return The id
+     */
+    
     int selectId( String tag, Plugin plugin );
 }

@@ -111,6 +111,12 @@ public final class LinkHome
         return _dao.selectLinksList( _plugin );
     }
 
+    
+    /**
+    *Load the data of all the links whose hashtag is specified in parameter and and returns them as a collection
+    *@param hashtag The hashtag
+    * @return a Collection of Link
+    */
     public static Collection<Link> getLinksListTag( int hashtag )
     {
         return _dao.selectLinksListTag( hashtag, _plugin );

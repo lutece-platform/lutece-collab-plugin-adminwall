@@ -191,16 +191,16 @@ public final class HashtagDAO implements IHashtagDAO
     @Override
     public int selectId( String tag, Plugin plugin )
     {
-        int id_hashtag;
+        int idHashtag;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID, plugin );
         daoUtil.setString( 1, tag );
         daoUtil.executeQuery(  );
 
         daoUtil.next(  );
-        id_hashtag = daoUtil.getInt( 1 ); //BUG
+        idHashtag = daoUtil.getInt( 1 );
 
         daoUtil.free(  );
 
-        return id_hashtag;
+        return idHashtag;
     }
 }

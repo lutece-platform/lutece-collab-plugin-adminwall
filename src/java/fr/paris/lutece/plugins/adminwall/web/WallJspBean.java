@@ -81,7 +81,7 @@ public class WallJspBean extends AdminWallJspBean
     private static final String TEMPLATE_CREATE_POST = "/admin/plugins/adminwall/create_post.html";
 
     // Parameters
-    private static final String PARAMETER_ID_POST = "id_post";
+    private static final String PARAMETER_ID_POST = "idPost";
     private static final String PARAMETER_TAG = "tag";
 
     // Properties for page titles
@@ -91,7 +91,7 @@ public class WallJspBean extends AdminWallJspBean
     // Markers
     private static final String MARK_POST_LIST = "post_list";
     private static final String MARK_POST = "post";
-    private static final String MARK_USER_ID = "user_id";
+    private static final String MARK_USERID = "userId";
     private static final String JSP_MANAGE_WALL = "jsp/admin/plugins/adminwall/ManageWall.jsp";
 
     // Properties
@@ -117,6 +117,12 @@ public class WallJspBean extends AdminWallJspBean
     private Hashtag _hashtag;
     private Link _link;
 
+    /**
+     * Returns the page with posts management
+     *
+     * @param request The Http request
+     * @return the html code of the page
+     */  
     @View( value = VIEW_MANAGE_POSTS, defaultView = true )
     public String getManagePosts( HttpServletRequest request )
     {
@@ -133,23 +139,23 @@ public class WallJspBean extends AdminWallJspBean
         UrlItem url = new UrlItem( JSP_MANAGE_WALL );
         String strUrl = url.getUrl(  );
 
-        String param_tag = request.getParameter( PARAMETER_TAG );
+        String paramTag = request.getParameter( PARAMETER_TAG );
 
-        if ( param_tag == null )
+        if ( paramTag == null )
         { //SANS PARAMETRE/FILTRAGE
             listPosts = (List<Post>) PostHome.getPostsList(  );
         }
         else
         { //AVEC PARAMETRE/FILTRAGE
 
-            int id_hashtag = HashtagHome.getId( param_tag );
-            List<Link> listLinks = (List<Link>) LinkHome.getLinksListTag( id_hashtag );
+            int idHashtag = HashtagHome.getId( paramTag );
+            List<Link> listLinks = (List<Link>) LinkHome.getLinksListTag( idHashtag );
 
             //Creation de la liste de la liste de Posts avec la liste de Links
             for ( Link link : listLinks )
             {
-                int id_post = link.getPost(  );
-                Post pos = PostHome.findByPrimaryKey( id_post );
+                int idPost = link.getPost(  );
+                Post pos = PostHome.findByPrimaryKey( idPost );
                 listPosts.add( pos );
             }
 
@@ -170,11 +176,11 @@ public class WallJspBean extends AdminWallJspBean
 
         //Infos User
         AdminUser currentUser = AdminUserService.getAdminUser( request );
-        int user_id = currentUser.getUserId(  );
+        int userId = currentUser.getUserId(  );
 
         //Model
         Map<String, Object> model = getModel(  );
-        model.put( MARK_USER_ID, user_id );
+        model.put( MARK_USERID, userId );
         model.put( MARK_NB_ITEMS_PER_PAGE, "" + _nItemsPerPage );
         model.put( MARK_PAGINATOR, paginator );
         model.put( MARK_POST_LIST, paginator.getPageItems(  ) );

@@ -21,71 +21,93 @@ import java.util.regex.Pattern;
  */
 public final class AdminWallService
 {
-    //Active les URL dans les posts
+    
+    private AdminWallService()
+    {
+           
+    }
+    
+    
+    /**
+     * Activate the URL in the post
+     *
+     * @param post The Post
+     */
+    
     public static void activateURL( Post post )
     {
-        String input_url = post.getContenu(  );
-        String pattStr_url = "(((https?)://)?([\\w\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?)";
-        Pattern p_url = Pattern.compile( pattStr_url );
-        Matcher m_url = p_url.matcher( input_url );
-        StringBuffer bufStr_url = new StringBuffer(  );
-        boolean flag_url = false;
+        String inputUrl = post.getContenu(  );
+        String strPatternUrl = "(((https?)://)?([\\w\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?)";
+        Pattern pattUrl = Pattern.compile( strPatternUrl );
+        Matcher matchUrl = pattUrl.matcher( inputUrl );
+        StringBuffer strBuffUrl = new StringBuffer(  );
+        boolean flagUrl = false;
 
-        while ( ( flag_url = m_url.find(  ) ) )
+        while ( ( flagUrl = matchUrl.find(  ) ) )
         {
-            String lien = m_url.group( 1 );
-            String http = m_url.group( 2 );
+            String lien = matchUrl.group( 1 );
+            String http = matchUrl.group( 2 );
 
             if ( http == null )
             { //Detection du protocole
                 lien = "http://" + lien;
             }
 
-            m_url.appendReplacement( bufStr_url,
+            matchUrl.appendReplacement( strBuffUrl,
                 "<a href=\"" + lien + "\" alt=lien url target=\"_blank\">" + lien + "</a>" );
         }
 
-        m_url.appendTail( bufStr_url );
+        matchUrl.appendTail( strBuffUrl );
 
-        String chaine_url = bufStr_url.toString(  );
-        post.setContenu( chaine_url );
+        String strUrl = strBuffUrl.toString(  );
+        post.setContenu( strUrl );
     }
 
-    //Active les liens de filtrage par tag dans les posts
+   
+    /**
+     * Activate tag filter links in the post
+     *
+     * @param post The Post
+     */
     public static void activateHashtag( Post post )
     {
-        String input = post.getContenu(  );
-        String pattStr = "(#[\\w\\u00C0-\\u00FF\\u0153]+)";
-        Pattern p = Pattern.compile( pattStr );
-        Matcher m = p.matcher( input );
-        StringBuffer bufStr = new StringBuffer(  );
-        boolean flag = false;
+        String inputTag = post.getContenu(  );
+        String strPatternTag = "(#[\\w\\u00C0-\\u00FF\\u0153]+)";
+        Pattern pattTag = Pattern.compile( strPatternTag );
+        Matcher matchTag = pattTag.matcher( inputTag );
+        StringBuffer strBuffTag = new StringBuffer(  );
+        boolean flagTag = false;
 
-        while ( ( flag = m.find(  ) ) )
+        while ( ( flagTag = matchTag.find(  ) ) )
         {
-            String tag = m.group(  ).replace( "#", "" );
-            String mot = m.group(  );
-            m.appendReplacement( bufStr,
+            String tag = matchTag.group(  ).replace( "#", "" );
+            String mot = matchTag.group(  );
+            matchTag.appendReplacement( strBuffTag,
                 "<a href=\"jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&tag=" + tag + "\">" + mot +
                 "</a>" );
         }
 
-        m.appendTail( bufStr );
+        matchTag.appendTail( strBuffTag );
 
-        String chaine = bufStr.toString(  );
-        post.setContenu( chaine );
+        String strTag = strBuffTag.toString(  );
+        post.setContenu( strTag );
     }
 
     //Detecte les Hashtags dans le post et insert dans la DB
+    /**
+     * Detect hashtags from the post and insert them in the database
+     *
+     * @param post The Post
+     */
     public static void detectHashtag( Post post )
     {
-        Pattern p = Pattern.compile( "#[\\w\\u00C0-\\u00FF\\u0153]+" );
-        Matcher m = p.matcher( post.getContenu(  ) );
+        Pattern pattTag = Pattern.compile( "#[\\w\\u00C0-\\u00FF\\u0153]+" );
+        Matcher matchTag = pattTag.matcher( post.getContenu(  ) );
 
-        while ( m.find(  ) )
+        while ( matchTag.find(  ) )
         {
             String[] tab = new String[2];
-            tab = m.group(  ).split( "#", 2 );
+            tab = matchTag.group(  ).split( "#", 2 );
 
             Hashtag hashtag = new Hashtag(  );
             hashtag.setTag( tab[1] );

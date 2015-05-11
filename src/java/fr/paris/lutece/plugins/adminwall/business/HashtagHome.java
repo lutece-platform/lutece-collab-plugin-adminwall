@@ -111,8 +111,14 @@ public final class HashtagHome
         return _dao.selectHashtagsList( _plugin );
     }
 
-    public static int getId( String tag )
+    
+     /**
+     * Returns an id whose content contains the Tag specified in parameter
+     * @param strTag The tag 
+     * @return the hashtag Id
+     */
+    public static int getId( String strTag )
     {
-        return _dao.selectId( tag, _plugin );
+        return _dao.selectId( strTag, _plugin );
     }
 }

@@ -9,13 +9,13 @@
         </div>
         <@paginationAdmin paginator=paginator combo=1 />
 
-        <input type="hidden" id="id_post" name="id_post"  />
+        <input type="hidden" id="idPost" name="idPost"  />
 
         <!--Liste des Posts-->
         <div class="direct-chat-messages">
             <#list post_list as post >
-
-            <input type="hidden" id="id_post" name="id_post"  />
+            
+            <input type="hidden" id="idPost" name="idPost"  />
 
             <!--Post-->
             <div class="direct-chat-msg">
@@ -24,8 +24,8 @@
                 <div class="direct-chat-info clearfix">
                     <span class="direct-chat-name pull-left">${post.auteur}</span>
                     <span class="direct-chat-timestamp pull-right">${post.timestamp}
-                        <#if post.idAuteur == user_id>
-                        <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&id_post=${post.idPost}" class="btn btn-danger btn-xs" title="#i18n{portal.util.labelDelete}" >
+                        <#if post.idAuteur == userId>
+                        <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&idPost=${post.idPost}" class="btn btn-danger btn-xs" title="#i18n{portal.util.labelDelete}" >
                             <i class="icon-trash icon-white"></i>
                         </a>
                         </#if>
@@ -34,7 +34,7 @@
 
                 <!--Avatar-->
                 <!--<img class="direct-chat-img" title="Avatar" alt="avatar" src="http://screenshots.en.sftcdn.net/en/scrn/107000/107191/mozilla-firefox-10-100x100.png" />-->
-                <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${user_id}"/>
+                <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?idUser=${userId}"/>
 
                 <!--Contenu-->
                 <div class="direct-chat-text">

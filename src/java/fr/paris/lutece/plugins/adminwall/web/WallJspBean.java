@@ -80,6 +80,7 @@ public class WallJspBean extends AdminWallJspBean
     // Parameters
     private static final String PARAMETER_ID_POST = "idPost";
     private static final String PARAMETER_TAG = "tag";
+    private static final String PARAMETER_ID_AUTEUR = "idAuteur";
 
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_POSTS = "adminwall.manage_posts.pageTitle";
@@ -136,6 +137,7 @@ public class WallJspBean extends AdminWallJspBean
         UrlItem url = new UrlItem( JSP_MANAGE_WALL );
         String strUrl = url.getUrl(  );
 
+        //TAG
         String paramTag = request.getParameter( PARAMETER_TAG );
 
         if ( paramTag == null )
@@ -144,7 +146,7 @@ public class WallJspBean extends AdminWallJspBean
         }
         else
         { //AVEC PARAMETRE/FILTRAGE
-
+            
             int idHashtag = HashtagHome.getId( paramTag );
             List<Link> listLinks = (List<Link>) LinkHome.getLinksListTag( idHashtag );
 
@@ -157,6 +159,20 @@ public class WallJspBean extends AdminWallJspBean
             }
 
             Collections.reverse( listPosts );
+        }
+        
+        //AUTEUR
+        String paramIdAuteur = request.getParameter( PARAMETER_ID_AUTEUR );
+
+        if ( paramIdAuteur == null )
+        { //SANS PARAMETRE/FILTRAGE
+            listPosts = (List<Post>) PostHome.getPostsList(  );
+        }
+        else
+        { //AVEC PARAMETRE/FILTRAGE
+
+            int nIdAuteur = Integer.parseInt(paramIdAuteur);
+            listPosts = (List<Post>) PostHome.getPostsListIdAuteur(nIdAuteur);           
         }
 
         for ( Post pos : listPosts )
@@ -225,6 +241,10 @@ public class WallJspBean extends AdminWallJspBean
         String nom = currentUser.getLastName(  );
         _post.setAuteur( prenom + " " + nom );
 
+        int idAuteur = currentUser.getUserId();
+        _post.setIdAuteur(idAuteur);
+        
+        
         populate( _post, request );
 
         // Check constraints

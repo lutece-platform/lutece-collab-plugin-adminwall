@@ -52,6 +52,7 @@ public final class PostDAO implements IPostDAO
     private static final String SQL_QUERY_DELETE = "DELETE FROM adminwall_post WHERE id_post = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE adminwall_post SET id_post = ?, contenu = ?, date = ?, id_auteur= ?, auteur = ? WHERE id_post = ?";
     private static final String SQL_QUERY_SELECTALL = "SELECT id_post, contenu, date, id_auteur, auteur FROM adminwall_post ORDER BY id_post DESC";
+    private static final String SQL_QUERY_SELECT_ID_AUTEUR = "SELECT id_post, contenu, date, id_auteur, auteur FROM adminwall_post WHERE id_auteur = ? ORDER BY id_post DESC";
 
     /**
      * Generates a new primary key
@@ -173,6 +174,37 @@ public final class PostDAO implements IPostDAO
             post.setIdAuteur( daoUtil.getInt( 4 ) );
             post.setAuteur( daoUtil.getString( 5 ) );
 
+            postList.add( post );
+        }
+
+        daoUtil.free(  );
+
+        return postList;
+    }
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public Collection<Post> selectPostsListIdAuteur( int nIdAuteur, Plugin plugin )
+    {
+        Collection<Post> postList = new ArrayList<Post>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID_AUTEUR, plugin );
+        daoUtil.setInt( 1, nIdAuteur);
+        
+        daoUtil.executeQuery(  );
+        
+
+        while ( daoUtil.next(  ) )
+        {
+            Post post = new Post(  );
+            
+            post.setIdPost( daoUtil.getInt( 1 ) );
+            post.setContenu( daoUtil.getString( 2 ) );
+            post.setTimestamp( daoUtil.getTimestamp( 3 ) );
+            post.setIdAuteur( daoUtil.getInt( 4 ) );
+            post.setAuteur( daoUtil.getString( 5 ) );
+            
             postList.add( post );
         }
 

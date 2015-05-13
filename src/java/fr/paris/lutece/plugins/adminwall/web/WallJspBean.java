@@ -166,7 +166,7 @@ public class WallJspBean extends AdminWallJspBean
 
         if ( paramIdAuteur == null )
         { //SANS PARAMETRE/FILTRAGE
-            listPosts = (List<Post>) PostHome.getPostsList(  );
+            
         }
         else
         { //AVEC PARAMETRE/FILTRAGE

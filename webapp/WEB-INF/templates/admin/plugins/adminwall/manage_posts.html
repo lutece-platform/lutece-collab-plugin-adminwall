@@ -19,7 +19,9 @@
 
                 <!--Infos Post-->
                 <div class="direct-chat-info clearfix">
+                    <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
                     <span class="direct-chat-name pull-left">${post.auteur}</span>
+                    </a>
                     <span class="direct-chat-timestamp pull-right">${post.timestamp}
                         <#if userId == post.idAuteur >
                         <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&idPost=${post.idPost}" class="btn btn-danger btn-xs" title="#i18n{portal.util.labelDelete}" >

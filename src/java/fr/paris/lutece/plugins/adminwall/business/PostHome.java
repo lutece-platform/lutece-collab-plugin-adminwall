@@ -110,7 +110,7 @@ public final class PostHome
     {
         return _dao.selectPostsList( _plugin );
     }
-    
+
     /**
      * Load the data of all the post objects and returns them in form of a collection
      * @return the collection which contains the data of all the post objects

@@ -120,7 +120,7 @@ public class WallJspBean extends AdminWallJspBean
      *
      * @param request The Http request
      * @return the html code of the page
-     */  
+     */
     @View( value = VIEW_MANAGE_POSTS, defaultView = true )
     public String getManagePosts( HttpServletRequest request )
     {
@@ -146,7 +146,7 @@ public class WallJspBean extends AdminWallJspBean
         }
         else
         { //AVEC PARAMETRE/FILTRAGE
-            
+
             int idHashtag = HashtagHome.getId( paramTag );
             List<Link> listLinks = (List<Link>) LinkHome.getLinksListTag( idHashtag );
 
@@ -160,19 +160,19 @@ public class WallJspBean extends AdminWallJspBean
 
             Collections.reverse( listPosts );
         }
-        
+
         //AUTEUR
         String paramIdAuteur = request.getParameter( PARAMETER_ID_AUTEUR );
 
         if ( paramIdAuteur == null )
-        { //SANS PARAMETRE/FILTRAGE
-            
+        {
+             //SANS PARAMETRE/FILTRAGE
         }
         else
         { //AVEC PARAMETRE/FILTRAGE
 
-            int nIdAuteur = Integer.parseInt(paramIdAuteur);
-            listPosts = (List<Post>) PostHome.getPostsListIdAuteur(nIdAuteur);           
+            int nIdAuteur = Integer.parseInt( paramIdAuteur );
+            listPosts = (List<Post>) PostHome.getPostsListIdAuteur( nIdAuteur );
         }
 
         for ( Post pos : listPosts )
@@ -241,10 +241,9 @@ public class WallJspBean extends AdminWallJspBean
         String nom = currentUser.getLastName(  );
         _post.setAuteur( prenom + " " + nom );
 
-        int idAuteur = currentUser.getUserId();
-        _post.setIdAuteur(idAuteur);
-        
-        
+        int idAuteur = currentUser.getUserId(  );
+        _post.setIdAuteur( idAuteur );
+
         populate( _post, request );
 
         // Check constraints

@@ -88,7 +88,5 @@ public interface ILinkDAO
      * @param plugin the Plugin
      * @return The collection of Link
     */
-    
-    
     Collection<Link> selectLinksListTag( int hashtag, Plugin plugin );
 }

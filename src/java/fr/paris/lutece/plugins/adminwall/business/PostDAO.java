@@ -181,7 +181,7 @@ public final class PostDAO implements IPostDAO
 
         return postList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
@@ -190,21 +190,20 @@ public final class PostDAO implements IPostDAO
     {
         Collection<Post> postList = new ArrayList<Post>(  );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID_AUTEUR, plugin );
-        daoUtil.setInt( 1, nIdAuteur);
-        
+        daoUtil.setInt( 1, nIdAuteur );
+
         daoUtil.executeQuery(  );
-        
 
         while ( daoUtil.next(  ) )
         {
             Post post = new Post(  );
-            
+
             post.setIdPost( daoUtil.getInt( 1 ) );
             post.setContenu( daoUtil.getString( 2 ) );
             post.setTimestamp( daoUtil.getTimestamp( 3 ) );
             post.setIdAuteur( daoUtil.getInt( 4 ) );
             post.setAuteur( daoUtil.getString( 5 ) );
-            
+
             postList.add( post );
         }
 

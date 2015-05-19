@@ -42,4 +42,16 @@
 	<!-- Portlet parameters -->
     <portlets>
    </portlets>
+   
+   <!-- Dashboard components -->
+    <dashboard-components>
+        <dashboard-component>
+            <dashboard-component-name>ADMINWALL</dashboard-component-name>
+            <dashboard-component-class>fr.paris.lutece.plugins.adminwall.web.AdminWallDashboardComponent</dashboard-component-class>
+            <dashboard-feature-right>ADMINWALL_ACCESS</dashboard-feature-right>
+            <dashboard-zone>1</dashboard-zone>
+            <dashboard-zone-order>4</dashboard-zone-order>
+        </dashboard-component>
+    </dashboard-components>
+    
 </plug-in>

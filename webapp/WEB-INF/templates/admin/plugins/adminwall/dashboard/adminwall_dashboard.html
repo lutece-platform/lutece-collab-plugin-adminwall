@@ -1,0 +1,32 @@
+<div class="box box-primary box-solid direct-chat direct-chat-primary">
+
+    <div class="box-header">
+        <h3 class="box-title">Messages</h3>
+    </div>
+
+    <div class="box-body">
+        <div class="direct-chat-messages direct-chat-dashboard">
+            <#list post_list as post >
+
+            <input type="hidden" id="idPost" name="idPost"  />
+
+            <div class="direct-chat-msg">
+
+                <div class="direct-chat-info clearfix">
+                    <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
+                        <span class="direct-chat-name pull-left">${post.auteur}</span>
+                    </a>
+                    <span class="direct-chat-timestamp pull-right">${post.timestamp}</span>
+                </div>
+
+  
+                <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${userId}"/>
+
+                <div class="direct-chat-text">
+                    ${post.contenu}
+                </div>
+            </div>
+            </#list>
+        </div>
+    </div>
+</div>

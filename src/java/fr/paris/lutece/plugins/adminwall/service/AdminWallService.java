@@ -21,19 +21,15 @@ import java.util.regex.Pattern;
  */
 public final class AdminWallService
 {
-    
-    private AdminWallService()
+    private AdminWallService(  )
     {
-           
     }
-    
-    
+
     /**
      * Activate the URL in the post
      *
      * @param post The Post
      */
-    
     public static void activateURL( Post post )
     {
         String inputUrl = post.getContenu(  );
@@ -47,14 +43,14 @@ public final class AdminWallService
         {
             String lien = matchUrl.group( 1 );
             String http = matchUrl.group( 2 );
-
+            String lien_href = lien;
             if ( http == null )
             { //Detection du protocole
-                lien = "http://" + lien;
+                lien_href = "http://" + lien;
             }
 
             matchUrl.appendReplacement( strBuffUrl,
-                "<a href=\"" + lien + "\" alt=lien url target=\"_blank\">" + lien + "</a>" );
+                "<a href=\"" + lien_href + "\" alt=lien url target=\"_blank\">" + lien + "</a>" );
         }
 
         matchUrl.appendTail( strBuffUrl );
@@ -63,7 +59,6 @@ public final class AdminWallService
         post.setContenu( strUrl );
     }
 
-   
     /**
      * Activate tag filter links in the post
      *

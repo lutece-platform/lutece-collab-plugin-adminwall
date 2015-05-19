@@ -88,5 +88,5 @@ public interface IPostDAO
      * @param plugin the Plugin
      * @return The collection which contains the data of all the post objects
      */
-    Collection<Post> selectPostsListIdAuteur( int nIdAuteur, Plugin plugin);
+    Collection<Post> selectPostsListIdAuteur( int nIdAuteur, Plugin plugin );
 }

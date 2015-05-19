@@ -88,6 +88,5 @@ public interface IHashtagDAO
      * @param plugin the Plugin
      * @return The id
      */
-    
     int selectId( String tag, Plugin plugin );
 }

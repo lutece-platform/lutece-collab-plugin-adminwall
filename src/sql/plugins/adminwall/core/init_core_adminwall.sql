@@ -4,7 +4,7 @@
 --
 DELETE FROM core_admin_right WHERE id_right = 'UPDATER_MANAGEMENT';
 INSERT INTO core_admin_right (id_right,name,level_right,admin_url,description,is_updatable,plugin_name,id_feature_group,icon_url,documentation_url, id_order ) VALUES 
-('ADMINWALL_ACCESS','adminwall.adminFeature.AdminWall.name',1,'jsp/admin/plugins/adminwall/ManageWall.jsp','adminwall.adminFeature.AdminWall.description',0,'adminwall',NULL,NULL,NULL,4);
+('ADMINWALL_ACCESS','adminwall.adminFeature.AdminWall.name',3,'jsp/admin/plugins/adminwall/ManageWall.jsp','adminwall.adminFeature.AdminWall.description',1,'adminwall',NULL,NULL,NULL,4);
 
 
 --

@@ -31,7 +31,7 @@
             <feature-id>ADMINWALL_ACCESS</feature-id>
             <feature-title>adminwall.adminFeature.AdminWall.name</feature-title>
             <feature-description>adminwall.adminFeature.AdminWall.description</feature-description>
-            <feature-level>0</feature-level>
+            <feature-level>3</feature-level>
             <feature-url>jsp/admin/plugins/adminwall/ManageWall.jsp</feature-url>
             <feature-icon-url></feature-icon-url>
       </admin-feature>

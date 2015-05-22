@@ -1,53 +1,44 @@
-
-<div class="row-fluid" >
-
-    <div class="span9">
-
+<@paginationAdmin paginator=paginator combo=1 />
+<div class="row" >
+    <div class="col-md-9">
         <@messages infos=infos />
-        <@paginationAdmin paginator=paginator combo=1 />
-
         <input type="hidden" id="idPost" name="idPost"  />
-
-        <!--Liste des Posts-->
+		<!--Liste des Posts-->
         <div class="direct-chat-messages">
             <#list post_list as post >
-            
             <input type="hidden" id="idPost" name="idPost"  />
-
             <!--Post-->
             <div class="direct-chat-msg">
-
                 <!--Infos Post-->
                 <div class="direct-chat-info clearfix">
                     <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
-                    <span class="direct-chat-name pull-left">${post.auteur}</span>
+                        <span class="direct-chat-name pull-left">${post.auteur}</span>
                     </a>
                     <span class="direct-chat-timestamp pull-right">${post.timestamp}
                         <#if userId == post.idAuteur >
                         <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&idPost=${post.idPost}" class="btn btn-danger btn-xs" title="#i18n{portal.util.labelDelete}" >
-                            <i class="icon-trash icon-white"></i>
+                            <i class="fa fa-trash"></i>
                         </a>
-                       </#if>
+                        </#if>
                     </span>
                 </div>
-
                 <!--Avatar-->
-                
                 <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${userId}"/>
-
                 <!--Contenu-->
                 <div class="direct-chat-text">
                     ${post.contenu}   
-
                 </div>
-
             </div>
-
             </#list>
+		</div>
+         
         </div>
-        <@paginationAdmin paginator=paginator />
-    </div>
-    <div class="span3" >
-        <#include "create_post.html" />
-    </div>
+        <div class="col-md-3" >
+            <#include "create_post.html" />
+        </div>
 </div>
+<div class="row" >
+	<div class="col-md-9">
+		<@paginationAdmin paginator=paginator />
+    </div>
+</div>  

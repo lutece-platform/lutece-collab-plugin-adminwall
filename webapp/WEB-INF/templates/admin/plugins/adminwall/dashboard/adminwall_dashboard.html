@@ -2,6 +2,11 @@
 
     <div class="box-header">
         <h3 class="box-title">Messages</h3>
+        <div class="box-tools pull-right">
+            <a class="btn btn-xs btn-flat btn-primary" title="Ecrire un message" href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts">
+                <i class="icon-pencil icon-white"></i>
+            </a>
+        </div>
     </div>
 
     <div class="box-body">
@@ -19,7 +24,7 @@
                     <span class="direct-chat-timestamp pull-right">${post.timestamp}</span>
                 </div>
 
-  
+
                 <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${userId}"/>
 
                 <div class="direct-chat-text">

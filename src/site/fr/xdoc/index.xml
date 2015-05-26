@@ -11,13 +11,21 @@
             </p>
             -->
             <subsection name="Introduction">
-                <p></p>
+                <p>Ce plugin implémente une messagerie interne en back-office 
+                    sur le même principe que Twitter (messages courts, tags)
+                    afin de permettre une meilleure collaboration.
+                </p>
             </subsection>
             <subsection name="Configuration">
-                <p></p>
+                <p>
+                    <li>
+                        <ul>Nécessite le plugin adminavatar</ul>   
+                        <ul>Utilise des feuilles de styles CSS AdminLTEv2</ul>
+                    </li>       
+                </p>
             </subsection>
             <subsection name="Usage">
-                <p></p>
+                <p>Plugin accessible à tous les utilisateurs du back-office</p>
             </subsection>
         </section>
     </body>

@@ -112,7 +112,8 @@ public final class PostHome
     }
 
     /**
-     * Load the data of all the post objects and returns them in form of a collection
+     * Load the data of all the post objects whose Auteur identifier is specified in parameter and return them in form of a collection
+     * @param nIdAuteur The Auteur primary key
      * @return the collection which contains the data of all the post objects
      */
     public static Collection<Post> getPostsListIdAuteur( int nIdAuteur )

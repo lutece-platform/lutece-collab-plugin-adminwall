@@ -164,11 +164,7 @@ public class WallJspBean extends AdminWallJspBean
         //AUTEUR
         String paramIdAuteur = request.getParameter( PARAMETER_ID_AUTEUR );
 
-        if ( paramIdAuteur == null )
-        {
-             //SANS PARAMETRE/FILTRAGE
-        }
-        else
+        if ( paramIdAuteur != null )
         { //AVEC PARAMETRE/FILTRAGE
 
             int nIdAuteur = Integer.parseInt( paramIdAuteur );

@@ -21,6 +21,9 @@ import java.util.regex.Pattern;
  */
 public final class AdminWallService
 {
+    /**
+     * Creates a new instance of AdminWallService
+     */
     private AdminWallService(  )
     {
     }
@@ -43,14 +46,15 @@ public final class AdminWallService
         {
             String lien = matchUrl.group( 1 );
             String http = matchUrl.group( 2 );
-            String lien_href = lien;
+            String strHref = lien;
+
             if ( http == null )
             { //Detection du protocole
-                lien_href = "http://" + lien;
+                strHref = "http://" + lien;
             }
 
             matchUrl.appendReplacement( strBuffUrl,
-                "<a href=\"" + lien_href + "\" alt=lien url target=\"_blank\">" + lien + "</a>" );
+                "<a href=\"" + strHref + "\" alt=lien url target=\"_blank\">" + lien + "</a>" );
         }
 
         matchUrl.appendTail( strBuffUrl );

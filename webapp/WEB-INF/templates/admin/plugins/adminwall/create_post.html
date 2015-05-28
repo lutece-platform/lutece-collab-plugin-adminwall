@@ -1,17 +1,24 @@
-<form class="form" method="post" action="jsp/admin/plugins/adminwall/ManageWall.jsp">
-    <@messages errors=errors />
-    <input type="hidden" id="id_post" name="id_post"  />
-
-    <div class="form-group">
-        <label class="sr-only" for="contenu" >#i18n{adminwall.create_post.labelContenu} :</label>
-        <div class="controls">
-            <textarea class="form-control" rows="8" cols="35" type="text" id="contenu" name="contenu" maxlength="255" tabindex="2" style="resize:none"></textarea>   
-        </div>
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title"><span><i class="fa fa-comment"></i></span> Votre message</h3>   
     </div>
+    <div class="box-body">
+        <form class="form" method="post" action="jsp/admin/plugins/adminwall/ManageWall.jsp">
+            <@messages errors=errors />
+            <input type="hidden" id="id_post" name="id_post"  />
 
-    <div class="form-group">
-        <button name="action_createPost" class="btn btn-primary" type="submit" tabindex="5">
-            #i18n{portal.util.labelCreate}
-        </button>
+            <div class="form-group">
+                <label class="sr-only" for="contenu" >#i18n{adminwall.create_post.labelContenu} :</label>
+                <div class="controls">
+                    <textarea class="form-control" rows="8" cols="35" type="text" id="contenu" name="contenu" maxlength="255" tabindex="2" style="resize:none"></textarea>   
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button name="action_createPost" class="btn btn-primary btn-block" type="submit" tabindex="5">
+                    Envoyer
+                </button>
+            </div>
+        </form>
     </div>
-</form>
+</div>

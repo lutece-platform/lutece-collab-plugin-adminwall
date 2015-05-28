@@ -33,11 +33,10 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import java.sql.Timestamp;
-
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 /**
@@ -48,16 +47,11 @@ public class Post
     // Variables declarations 
     private int _nIdPost;
     @NotEmpty( message = "#i18n{adminwall.validation.post.Contenu.notEmpty}" )
-    //@NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
-    //@Pattern(regexp="\\w+", message="Voila")
     @Size( max = 255, message = "#i18n{adminwall.validation.post.Contenu.size}" )
-    //@Size( max = 255, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strContenu;
     private Timestamp _tTime;
 
-    // @NotEmpty( message = "#i18n{adminwall.validation.post.Auteur.notEmpty}" )
     @NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
-    // @Size( max = 50 , message = "#i18n{adminwall.validation.post.Auteur.size}" ) 
     @Size( max = 50, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strAuteur;
     private int _nIdAuteur;

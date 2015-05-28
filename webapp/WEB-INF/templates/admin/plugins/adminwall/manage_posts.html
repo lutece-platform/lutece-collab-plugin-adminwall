@@ -1,9 +1,9 @@
-<@paginationAdmin paginator=paginator combo=1 />
 <div class="row" >
     <div class="col-md-9">
+        <@paginationAdmin paginator=paginator combo=1 />
         <@messages infos=infos />
         <input type="hidden" id="idPost" name="idPost"  />
-		<!--Liste des Posts-->
+        <!--Liste des Posts-->
         <div class="direct-chat-messages">
             <#list post_list as post >
             <input type="hidden" id="idPost" name="idPost"  />
@@ -23,22 +23,17 @@
                     </span>
                 </div>
                 <!--Avatar-->
-                <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${post.idAuteur}"/>
+                <img class="direct-chat-img" title="Avatar" alt="avatar ${post.idAuteur}" src="servlet/plugins/adminavatar/avatar?id_user=${post.idAuteur}"/>
                 <!--Contenu-->
                 <div class="direct-chat-text">
                     ${post.contenu}   
                 </div>
             </div>
             </#list>
-		</div>
-         
+         <@paginationAdmin paginator=paginator />
+        </div>
         </div>
         <div class="col-md-3" >
             <#include "create_post.html" />
         </div>
 </div>
-<div class="row" >
-	<div class="col-md-9">
-		<@paginationAdmin paginator=paginator />
-    </div>
-</div>  

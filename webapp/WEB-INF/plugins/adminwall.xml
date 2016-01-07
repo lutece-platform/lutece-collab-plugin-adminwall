@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<plug-in>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
     <name>adminwall</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
     <version>1.0.0</version>
-    <documentation></documentation>
-    <installation></installation>
-    <changes></changes>
-    <user-guide></user-guide>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
     <description>adminwall.plugin.description</description>
     <provider>adminwall.plugin.provider</provider>
     <provider-url>http://fr.lutece.paris.fr</provider-url>
@@ -14,12 +13,12 @@
     <copyright>Copyright</copyright>
     <db-pool-required>1</db-pool-required>
     
-     <!-- Feuilles de style CSS spécifiques éventuelles -->
+     <!-- Feuilles de style CSS spÃ©cifiques Ã©ventuelles -->
     <css-stylesheets>
       
     </css-stylesheets>
     
-    <!-- Feuilles de style CSS admin spécifiques éventuelles -->
+    <!-- Feuilles de style CSS admin spÃ©cifiques Ã©ventuelles -->
     <admin-css-stylesheets>
         <admin-css-stylesheet>css/admin/AdminLTEv2.css</admin-css-stylesheet>
     </admin-css-stylesheets>
@@ -33,7 +32,7 @@
             <feature-description>adminwall.adminFeature.AdminWall.description</feature-description>
             <feature-level>3</feature-level>
             <feature-url>jsp/admin/plugins/adminwall/ManageWall.jsp</feature-url>
-            <feature-icon-url></feature-icon-url>
+            <feature-icon-url/>
       </admin-feature>
     </admin-features>    
   	<!-- XPages parameters -->

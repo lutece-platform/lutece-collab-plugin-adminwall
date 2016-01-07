@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
     <name>adminwall</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <documentation/>
     <installation/>
     <changes/>
@@ -13,12 +13,12 @@
     <copyright>Copyright</copyright>
     <db-pool-required>1</db-pool-required>
     
-     <!-- Feuilles de style CSS spécifiques éventuelles -->
+     <!-- Feuilles de style CSS spÃ©cifiques Ã©ventuelles -->
     <css-stylesheets>
       
     </css-stylesheets>
     
-    <!-- Feuilles de style CSS admin spécifiques éventuelles -->
+    <!-- Feuilles de style CSS admin spÃ©cifiques Ã©ventuelles -->
     <admin-css-stylesheets>
         <admin-css-stylesheet>css/admin/AdminLTEv2.css</admin-css-stylesheet>
     </admin-css-stylesheets>

@@ -8,7 +8,30 @@
             <#list post_list as post >
             <input type="hidden" id="idPost" name="idPost"  />
             <!--Post-->
+            <#if userId==post.idAuteur>
             <div class="direct-chat-msg">
+                <!--Infos Post-->
+                <div class="direct-chat-info clearfix">
+                    <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
+                        <span class="direct-chat-name pull-right">${post.auteur}</span>
+                    </a>
+                    <span class="direct-chat-timestamp pull-left">${post.timestamp}
+                        <#if userId == post.idAuteur >
+                        <a  href="jsp/admin/plugins/adminwall/ManageWall.jsp?action=confirmRemovePost&idPost=${post.idPost}" class="btn btn-danger btn-xs pull-left margin-1" title="#i18n{portal.util.labelDelete}" >
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        </#if>
+                    </span>
+                </div>
+                <!--Avatar-->
+                <img class="direct-chat-img-right" title="Avatar" alt="avatar ${post.idAuteur}" src="servlet/plugins/adminavatar/avatar?id_user=${post.idAuteur}"/>
+                <!--Contenu-->
+                <div class="direct-chat-text-left">
+                    ${post.contenu}   
+                </div>
+            </div>
+            <#else>
+                <div class="direct-chat-msg">
                 <!--Infos Post-->
                 <div class="direct-chat-info clearfix">
                     <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
@@ -26,9 +49,10 @@
                 <img class="direct-chat-img" title="Avatar" alt="avatar ${post.idAuteur}" src="servlet/plugins/adminavatar/avatar?id_user=${post.idAuteur}"/>
                 <!--Contenu-->
                 <div class="direct-chat-text">
-                    ${post.contenu}   
+                    ${post.contenu}
                 </div>
             </div>
+            </#if>
             </#list>
          <@paginationAdmin paginator=paginator />
         </div>

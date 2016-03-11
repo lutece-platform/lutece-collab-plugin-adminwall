@@ -12,26 +12,9 @@
     <div class="box-body">
         <div class="direct-chat-messages direct-chat-dashboard">
             <#list post_list as post >
-            
+
             <input type="hidden" id="idPost" name="idPost"  />
-            <#if userId==post.idAuteur>
-            <div class="direct-chat-msg">
 
-                <div class="direct-chat-info clearfix">
-                    <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
-                        <span class="direct-chat-name pull-right">${post.auteur}</span>
-                    </a>
-                    <span class="direct-chat-timestamp pull-left">${post.timestamp}</span>
-                </div>
-
-
-                <img class="direct-chat-img-right" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${post.idAuteur}"/>
-
-                <div class="direct-chat-text-left">
-                    ${post.contenu}
-                </div>
-            </div>
-            <#else>
             <div class="direct-chat-msg">
 
                 <div class="direct-chat-info clearfix">
@@ -48,7 +31,6 @@
                     ${post.contenu}
                 </div>
             </div>
-            </#if>
             </#list>
         </div>
     </div>

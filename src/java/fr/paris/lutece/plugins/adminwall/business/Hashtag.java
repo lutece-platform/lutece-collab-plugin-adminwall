@@ -33,9 +33,9 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 
 /**
@@ -46,9 +46,7 @@ public class Hashtag
     // Variables declarations 
     private int _nIdHashtag;
 
-    // @NotEmpty( message = "#i18n{adminwall.validation.hashtag.Tag.notEmpty}" )
     @NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
-    // @Size( max = 50 , message = "#i18n{adminwall.validation.hashtag.Tag.size}" ) 
     @Size( max = 50, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strTag;
 

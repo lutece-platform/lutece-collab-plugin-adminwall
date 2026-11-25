@@ -1,24 +1,29 @@
-<div class="box box-solid box-primary">
-    <div class="box-header">
-        <h3 class="box-title"><span><i class="fa fa-comment"></i></span> Votre message</h3>   
-    </div>
-    <div class="box-body">
-        <form class="form" method="post" action="jsp/admin/plugins/adminwall/ManageWall.jsp">
-            <@messages errors=errors />
-            <input type="hidden" id="id_post" name="id_post"  />
-
-            <div class="form-group">
-                <label class="sr-only" for="contenu" >#i18n{adminwall.create_post.labelContenu} :</label>
-                <div class="controls">
-                    <textarea class="form-control" rows="8" cols="35" type="text" id="contenu" name="contenu" maxlength="255" tabindex="2" style="resize:none"></textarea>   
-                </div>
-            </div>
-
-            <div class="form-group">
-                <button name="action_createPost" class="btn btn-primary btn-block" type="submit" tabindex="5">
-                    Envoyer
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+<@modal id='createPostModal'>
+    <@modalHeader modalTitle='#i18n{adminwall.create_post.title}' />
+    <@modalBody>
+        <@tform method='post' name='create_post' action='jsp/admin/plugins/adminwall/ManageWall.jsp'>
+            <@input type='hidden' name='action' value='createPost' />
+            <@formGroup labelFor='contenu' labelKey='#i18n{adminwall.create_post.labelContenu}' mandatory=true rows=2>
+                <@input type='textarea' name='contenu' id='contenu' maxlength=255 rows=6 mandatory=true />
+            </@formGroup>
+            <@formGroup labelKey='#i18n{adminwall.importance.labelImportance}' rows=2>
+                <@radioButton name='importance' id='importanceStandard' value='standard' labelKey='#i18n{adminwall.importance.standard}' orientation='inline' checked=true />
+                <@radioButton name='importance' id='importanceMedium' value='medium' labelKey='#i18n{adminwall.importance.medium}' orientation='inline' />
+                <@radioButton name='importance' id='importanceHigh' value='high' labelKey='#i18n{adminwall.importance.high}' orientation='inline' />
+            </@formGroup>
+            <@formGroup labelKey='#i18n{adminwall.create_post.labelRecipients}' rows=2>
+                <@radioButton name='recipientMode' id='recipientModeAll' value='all' labelKey='#i18n{adminwall.create_post.labelToAll}' orientation='inline' checked=true />
+                <@radioButton name='recipientMode' id='recipientModeSelected' value='selected' labelKey='#i18n{adminwall.create_post.labelToSelected}' orientation='inline' />
+            </@formGroup>
+            <@div id='adminwall-recipients' class='mb-3 d-none'>
+                <@autocomplete id='adminwall-recipient-search' name='recipientSearch' suggestionsUrl='jsp/admin/plugins/adminwall/SearchRecipients.jsp?view=searchRecipients&q=' suggestionsPath='items' itemValueFieldName='id' itemLabelFieldNames='["name"]' itemDescriptionFieldNames='["email"]' minimumInputLength=2 minimumInputLenghtLabel='#i18n{adminwall.create_post.labelSearchMinLength}' searchLabel='#i18n{adminwall.create_post.labelSearchRecipient}' emptyLabel='#i18n{adminwall.create_post.noRecipientFound}' />
+                <@div id='adminwall-recipient-list' class='d-flex flex-wrap gap-2 mt-2' params={"data-remove-label": "#i18n{portal.util.labelDelete}"}></@div>
+                <@p class='form-hint mb-0'>#i18n{adminwall.create_post.recipientsHelp}</@p>
+            </@div>
+            <@formGroup rows=2>
+                <@button type='submit' title='#i18n{adminwall.create_post.buttonSend}' buttonIcon='send' color='primary' />
+            </@formGroup>
+        </@tform>
+    </@modalBody>
+</@modal>
+<script type="module" src="themes/admin/shared/plugins/adminwall/js/adminwall-recipients.js"></script>

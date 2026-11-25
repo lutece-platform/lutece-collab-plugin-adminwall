@@ -1,0 +1,13 @@
+<#-- The importance of a post as a badge : high (red), medium (warning), standard (primary, the default) -->
+<#macro importanceBadge importance='standard' class=''>
+<#switch importance!'standard'>
+    <#case 'high'>
+<@span class='badge bg-red text-red-fg adminwall-importance adminwall-importance-high ${class}' params={"title": "#i18n{adminwall.importance.labelImportance} : #i18n{adminwall.importance.high}"}><@icon style='alert-triangle' class='me-1' />#i18n{adminwall.importance.high}</@span>
+        <#break>
+    <#case 'medium'>
+<@span class='badge bg-warning text-warning-fg adminwall-importance adminwall-importance-medium ${class}' params={"title": "#i18n{adminwall.importance.labelImportance} : #i18n{adminwall.importance.medium}"}><@icon style='alert-circle' class='me-1' />#i18n{adminwall.importance.medium}</@span>
+        <#break>
+    <#default>
+<@span class='badge bg-primary text-primary-fg adminwall-importance adminwall-importance-standard ${class}' params={"title": "#i18n{adminwall.importance.labelImportance} : #i18n{adminwall.importance.standard}"}><@icon style='info-circle' class='me-1' />#i18n{adminwall.importance.standard}</@span>
+</#switch>
+</#macro>

@@ -64,6 +64,13 @@ public interface ILinkDAO
      */
     void delete( int nIdLink, Plugin plugin );
 
+    /**
+     * Delete the links of a post
+     * @param nIdPost The identifier of the post
+     * @param plugin the Plugin
+     */
+    void deleteByPost( int nIdPost, Plugin plugin );
+
     ///////////////////////////////////////////////////////////////////////////
     // Finders
 

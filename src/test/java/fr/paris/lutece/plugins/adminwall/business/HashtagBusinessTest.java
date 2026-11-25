@@ -33,44 +33,63 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import fr.paris.lutece.test.LuteceTestCase;
+import fr.paris.lutece.test.Utils;
+
+import org.junit.jupiter.api.Test;
 
 
+/**
+ * This is the business class test for the object Hashtag
+ */
 public class HashtagBusinessTest extends LuteceTestCase
 {
-    private final static int IDHASHTAG1 = 1;
-    private final static int IDHASHTAG2 = 2;
-    private final static String TAG1 = "Tag1";
-    private final static String TAG2 = "Tag2";
-
+    /**
+     * test Hashtag
+     */
+    @Test
     public void testBusiness(  )
     {
+        String strTag1 = Utils.getRandomName(  );
+        String strTag2 = Utils.getRandomName(  );
+
         // Initialize an object
         Hashtag hashtag = new Hashtag(  );
-        hashtag.setIdHashtag( IDHASHTAG1 );
-        hashtag.setTag( TAG1 );
+        hashtag.setTag( strTag1 );
 
         // Create test
         HashtagHome.create( hashtag );
 
         Hashtag hashtagStored = HashtagHome.findByPrimaryKey( hashtag.getIdHashtag(  ) );
-        assertEquals( hashtagStored.getIdHashtag(  ), hashtag.getIdHashtag(  ) );
-        assertEquals( hashtagStored.getTag(  ), hashtag.getTag(  ) );
+        assertNotNull( hashtagStored );
+        assertEquals( hashtag.getIdHashtag(  ), hashtagStored.getIdHashtag(  ) );
+        assertEquals( hashtag.getTag(  ), hashtagStored.getTag(  ) );
+
+        // A tag is stored once
+        Hashtag hashtagSame = new Hashtag(  );
+        hashtagSame.setTag( strTag1 );
+        HashtagHome.create( hashtagSame );
+        assertEquals( hashtag.getIdHashtag(  ), hashtagSame.getIdHashtag(  ) );
+        assertEquals( hashtag.getIdHashtag(  ), HashtagHome.getId( strTag1 ) );
 
         // Update test
-        hashtag.setIdHashtag( IDHASHTAG2 );
-        hashtag.setTag( TAG2 );
+        hashtag.setTag( strTag2 );
         HashtagHome.update( hashtag );
         hashtagStored = HashtagHome.findByPrimaryKey( hashtag.getIdHashtag(  ) );
-        assertEquals( hashtagStored.getIdHashtag(  ), hashtag.getIdHashtag(  ) );
-        assertEquals( hashtagStored.getTag(  ), hashtag.getTag(  ) );
+        assertEquals( hashtag.getIdHashtag(  ), hashtagStored.getIdHashtag(  ) );
+        assertEquals( hashtag.getTag(  ), hashtagStored.getTag(  ) );
 
         // List test
-        HashtagHome.getHashtagsList(  );
+        assertNotNull( HashtagHome.getHashtagsList(  ) );
 
         // Delete test
         HashtagHome.remove( hashtag.getIdHashtag(  ) );
         hashtagStored = HashtagHome.findByPrimaryKey( hashtag.getIdHashtag(  ) );
         assertNull( hashtagStored );
+        assertEquals( -1, HashtagHome.getId( strTag2 ) );
     }
 }

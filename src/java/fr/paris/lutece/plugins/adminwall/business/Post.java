@@ -33,17 +33,36 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
+import fr.paris.lutece.portal.service.rbac.RBACResource;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
 
 
 /**
  * This is the business class for the object Post
  */
-public class Post
+public class Post implements Serializable, RBACResource
 {
+    private static final long serialVersionUID = 1L;
+
+    /** RBAC resource type of the messages ( PostResourceIdService ) */
+    public static final String RESOURCE_TYPE = "ADMINWALL_POST";
+
+    /** High importance : red badge */
+    public static final String IMPORTANCE_HIGH = "high";
+
+    /** Medium importance : warning badge */
+    public static final String IMPORTANCE_MEDIUM = "medium";
+
+    /** Standard importance, the default : primary badge */
+    public static final String IMPORTANCE_STANDARD = "standard";
+
     // Variables declarations 
     private int _nIdPost;
     @NotEmpty( message = "#i18n{adminwall.validation.post.Contenu.notEmpty}" )
@@ -54,7 +73,31 @@ public class Post
     @NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
     @Size( max = 50, message = "#i18n{portal.validation.message.sizeMax}" )
     private String _strAuteur;
+
+    @Pattern( regexp = "high|medium|standard", message = "#i18n{adminwall.validation.post.importance.pattern}" )
+    private String _strImportance = IMPORTANCE_STANDARD;
     private int _nIdAuteur;
+    private List<Integer> _listRecipients = new ArrayList<>( );
+    private List<String> _listRecipientNames = new ArrayList<>( );
+    private boolean _bUnread;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getResourceTypeCode(  )
+    {
+        return RESOURCE_TYPE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getResourceId(  )
+    {
+        return String.valueOf( _nIdPost );
+    }
 
     /**
      * Returns the IdPost
@@ -154,5 +197,99 @@ public class Post
     public void setAuteur( String strAuteur )
     {
         _strAuteur = strAuteur;
+    }
+
+    /**
+     * Returns the ids of the admin users the post is restricted to
+     *
+     * @return the admin user ids, empty when the post is sent to all
+     */
+    public List<Integer> getRecipients( )
+    {
+        return _listRecipients;
+    }
+
+    /**
+     * Sets the ids of the admin users the post is restricted to
+     *
+     * @param listRecipients
+     *            the admin user ids, empty to send the post to all
+     */
+    public void setRecipients( List<Integer> listRecipients )
+    {
+        _listRecipients = ( listRecipients != null ) ? listRecipients : new ArrayList<>( );
+    }
+
+    /**
+     * Returns the display names of the recipients, filled for display only
+     *
+     * @return the display names
+     */
+    public List<String> getRecipientNames( )
+    {
+        return _listRecipientNames;
+    }
+
+    /**
+     * Sets the display names of the recipients
+     *
+     * @param listRecipientNames
+     *            the display names
+     */
+    public void setRecipientNames( List<String> listRecipientNames )
+    {
+        _listRecipientNames = ( listRecipientNames != null ) ? listRecipientNames : new ArrayList<>( );
+    }
+
+    /**
+     * Tells whether the post is restricted to some admin users
+     *
+     * @return true when the post has recipients, false when it is sent to all
+     */
+    public boolean isPrivate( )
+    {
+        return !_listRecipients.isEmpty( );
+    }
+
+    /**
+     * Tells whether the post is new for the user who reads the wall
+     *
+     * @return true when the post is new, false when it is read or written by that user
+     */
+    public boolean isUnread( )
+    {
+        return _bUnread;
+    }
+
+    /**
+     * Sets whether the post is new for the user who reads the wall
+     *
+     * @param bUnread
+     *            true when the post is new for that user
+     */
+    public void setUnread( boolean bUnread )
+    {
+        _bUnread = bUnread;
+    }
+
+    /**
+     * Returns the importance of the post
+     *
+     * @return {@link #IMPORTANCE_HIGH}, {@link #IMPORTANCE_MEDIUM} or {@link #IMPORTANCE_STANDARD}
+     */
+    public String getImportance( )
+    {
+        return _strImportance;
+    }
+
+    /**
+     * Sets the importance of the post; an empty value is the standard importance
+     *
+     * @param strImportance
+     *            {@link #IMPORTANCE_HIGH}, {@link #IMPORTANCE_MEDIUM} or {@link #IMPORTANCE_STANDARD}
+     */
+    public void setImportance( String strImportance )
+    {
+        _strImportance = ( strImportance == null || strImportance.isBlank( ) ) ? IMPORTANCE_STANDARD : strImportance;
     }
 }

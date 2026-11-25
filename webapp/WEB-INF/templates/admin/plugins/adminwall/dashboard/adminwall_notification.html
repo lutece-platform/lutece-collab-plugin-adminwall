@@ -1,0 +1,22 @@
+<#include "../importance_badge.html" />
+<#-- Notification zone of the admin header : the new messages of the user. Posting an entry marks the message as read. -->
+<@div class='adminwall-notification' params={"data-count": "${new_count}"}>
+    <@div class='d-flex align-items-center mb-1'>
+        <@span class='status-dot status-dot-animated bg-primary me-2'></@span>
+        <@link href='jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&status=new' class='text-body fw-bold' label=label />
+    </@div>
+    <#list post_list as item>
+    <@tform method='post' name='adminwall_notification_${item.id}' action='jsp/admin/plugins/adminwall/ManageWall.jsp' class='m-0'>
+        <@input type='hidden' name='action' value='markRead' />
+        <@input type='hidden' name='idPost' value='${item.id}' />
+        <@button type='submit' color='ghost-secondary' class='adminwall-notification-item w-100 justify-content-start text-start text-truncate py-1 px-2' tooltip='${item.author} : ${item.text}'>
+            <@importanceBadge importance=item.importance class='me-2' /><@span class='text-truncate'>${item.author} : ${item.text}</@span>
+        </@button>
+    </@tform>
+    </#list>
+    <#if can_create!false>
+    <@div class='mt-2 px-2'>
+        <@aButton href='jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&newPost=true' title='#i18n{adminwall.manage_posts.buttonNewPost}' buttonIcon='message-plus' color='primary' size='sm' class='adminwall-notification-new-post w-100' />
+    </@div>
+    </#if>
+</@div>

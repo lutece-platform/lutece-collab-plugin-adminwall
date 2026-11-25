@@ -33,54 +33,76 @@
  */
 package fr.paris.lutece.plugins.adminwall.business;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import fr.paris.lutece.test.LuteceTestCase;
+
+import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
 
 
+/**
+ * This is the business class test for the object Post
+ */
 public class PostBusinessTest extends LuteceTestCase
 {
-    private final static int IDPOST1 = 1;
-    private final static int IDPOST2 = 2;
-    private final static String CONTENU1 = "Contenu1";
-    private final static String CONTENU2 = "Contenu2";
-    private final static Timestamp TIMESTAMP1 = new Timestamp( 1000000L );
-    private final static Timestamp TIMESTAMP2 = new Timestamp( 2000000L );
-    private final static String AUTEUR1 = "Auteur1";
-    private final static String AUTEUR2 = "Auteur2";
+    private static final String CONTENU1 = "Contenu1";
+    private static final String CONTENU2 = "Contenu2";
+    private static final Timestamp TIMESTAMP1 = new Timestamp( 1000000L );
+    private static final Timestamp TIMESTAMP2 = new Timestamp( 2000000L );
+    private static final String AUTEUR1 = "Auteur1";
+    private static final String AUTEUR2 = "Auteur2";
+    private static final int IDAUTEUR1 = 1001;
+    private static final int IDAUTEUR2 = 1002;
 
+    /**
+     * test Post
+     */
+    @Test
     public void testBusiness(  )
     {
         // Initialize an object
         Post post = new Post(  );
-        post.setIdPost( IDPOST1 );
         post.setContenu( CONTENU1 );
         post.setTimestamp( TIMESTAMP1 );
         post.setAuteur( AUTEUR1 );
+        post.setIdAuteur( IDAUTEUR1 );
+        post.setImportance( Post.IMPORTANCE_HIGH );
 
         // Create test
         PostHome.create( post );
 
         Post postStored = PostHome.findByPrimaryKey( post.getIdPost(  ) );
-        assertEquals( postStored.getIdPost(  ), post.getIdPost(  ) );
-        assertEquals( postStored.getContenu(  ), post.getContenu(  ) );
-        assertEquals( postStored.getTimestamp(  ), post.getTimestamp(  ) );
-        assertEquals( postStored.getAuteur(  ), post.getAuteur(  ) );
+        assertNotNull( postStored );
+        assertEquals( post.getIdPost(  ), postStored.getIdPost(  ) );
+        assertEquals( post.getContenu(  ), postStored.getContenu(  ) );
+        assertEquals( post.getTimestamp(  ), postStored.getTimestamp(  ) );
+        assertEquals( post.getAuteur(  ), postStored.getAuteur(  ) );
+        assertEquals( post.getIdAuteur(  ), postStored.getIdAuteur(  ) );
+        assertEquals( Post.IMPORTANCE_HIGH, postStored.getImportance(  ) );
 
         // Update test
-        post.setIdPost( IDPOST2 );
         post.setContenu( CONTENU2 );
         post.setTimestamp( TIMESTAMP2 );
         post.setAuteur( AUTEUR2 );
+        post.setIdAuteur( IDAUTEUR2 );
+        post.setImportance( null );
         PostHome.update( post );
         postStored = PostHome.findByPrimaryKey( post.getIdPost(  ) );
-        assertEquals( postStored.getIdPost(  ), post.getIdPost(  ) );
-        assertEquals( postStored.getContenu(  ), post.getContenu(  ) );
-        assertEquals( postStored.getTimestamp(  ), post.getTimestamp(  ) );
-        assertEquals( postStored.getAuteur(  ), post.getAuteur(  ) );
+        assertEquals( post.getIdPost(  ), postStored.getIdPost(  ) );
+        assertEquals( post.getContenu(  ), postStored.getContenu(  ) );
+        assertEquals( post.getTimestamp(  ), postStored.getTimestamp(  ) );
+        assertEquals( post.getAuteur(  ), postStored.getAuteur(  ) );
+        assertEquals( post.getIdAuteur(  ), postStored.getIdAuteur(  ) );
+        assertEquals( Post.IMPORTANCE_STANDARD, postStored.getImportance(  ) );
 
-        // List test
-        PostHome.getPostsList(  );
+        // List tests
+        assertTrue( PostHome.getPostsList(  ).stream(  ).anyMatch( p -> p.getIdPost(  ) == post.getIdPost(  ) ) );
+        assertTrue( PostHome.getPostsListIdAuteur( IDAUTEUR2 ).stream(  ).anyMatch( p -> p.getIdPost(  ) == post.getIdPost(  ) ) );
 
         // Delete test
         PostHome.remove( post.getIdPost(  ) );

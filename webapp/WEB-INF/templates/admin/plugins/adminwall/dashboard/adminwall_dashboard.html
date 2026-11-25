@@ -1,55 +1,19 @@
-<div class="box box-primary box-solid direct-chat direct-chat-primary">
-
-    <div class="box-header">
-        <h3 class="box-title">Messages</h3>
-        <div class="box-tools pull-right">
-            <a class="btn btn-xs btn-flat btn-primary" title="Ecrire un message" href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts">
-                <i class="icon-pencil icon-white"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="box-body">
-        <div class="direct-chat-messages direct-chat-dashboard">
-            <#list post_list as post >
-            
-            <input type="hidden" id="idPost" name="idPost"  />
-            <#if userId==post.idAuteur>
-            <div class="direct-chat-msg">
-
-                <div class="direct-chat-info clearfix">
-                    <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
-                        <span class="direct-chat-name pull-right">${post.auteur}</span>
-                    </a>
-                    <span class="direct-chat-timestamp pull-left">${post.timestamp}</span>
-                </div>
-
-
-                <img class="direct-chat-img-right" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${post.idAuteur}"/>
-
-                <div class="direct-chat-text-left">
-                    ${post.contenu}
-                </div>
-            </div>
-            <#else>
-            <div class="direct-chat-msg">
-
-                <div class="direct-chat-info clearfix">
-                    <a href="jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}" >
-                        <span class="direct-chat-name pull-left">${post.auteur}</span>
-                    </a>
-                    <span class="direct-chat-timestamp pull-right">${post.timestamp}</span>
-                </div>
-
-
-                <img class="direct-chat-img" title="Avatar" alt="avatar" src="servlet/plugins/adminavatar/avatar?id_user=${post.idAuteur}"/>
-
-                <div class="direct-chat-text">
-                    ${post.contenu}
-                </div>
-            </div>
-            </#if>
-            </#list>
-        </div>
-    </div>
-</div>
+<#include "../importance_badge.html" />
+<@adminDashboardWidget id='adminwall' title='#i18n{adminwall.dashboard.title}' url=url boxIcon='messages'>
+    <#if post_list?has_content>
+        <#list post_list as post>
+        <@card class='mb-1'>
+            <@p class='mb-1'>
+                <@link href='jsp/admin/plugins/adminwall/ManageWall.jsp?view=managePosts&idAuteur=${post.idAuteur}' class='fw-bold' label='${post.auteur!}' />
+                <@span class='text-secondary ms-2'>${post.timestamp!}</@span>
+                <@importanceBadge importance=post.importance class='ms-2' />
+                <#if post.unread><@span class='badge bg-green-lt ms-2'>#i18n{adminwall.manage_posts.labelNew}</@span></#if>
+            </@p>
+            <#if post.private><@p class='mb-1'><@span class='badge bg-azure-lt text-wrap text-start mw-100' params={"title": "#i18n{adminwall.manage_posts.labelPrivate}"}><@icon style='lock' class='me-1' />#i18n{adminwall.manage_posts.labelTo} <#list post.recipientNames as name>${name}<#sep>, </#sep></#list></@span></@p></#if>
+            <@p class='mb-0'>${post.contenu!}</@p>
+        </@card>
+        </#list>
+    <#else>
+        <@empty title='#i18n{adminwall.manage_posts.noPost}' subtitle='#i18n{adminwall.manage_posts.noPostHelp}' iconName='message-off' />
+    </#if>
+</@adminDashboardWidget>

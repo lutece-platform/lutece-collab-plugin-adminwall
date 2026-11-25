@@ -86,7 +86,7 @@ public interface IHashtagDAO
      * Returns the identifier of the Hashtag whose tag is specified in parameter
      * @param tag the Tag
      * @param plugin the Plugin
-     * @return The id
+     * @return The id, or -1 when no hashtag has this tag
      */
     int selectId( String tag, Plugin plugin );
 }

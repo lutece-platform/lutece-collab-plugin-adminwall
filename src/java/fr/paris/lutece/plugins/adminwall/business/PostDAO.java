@@ -36,6 +36,9 @@ package fr.paris.lutece.plugins.adminwall.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -43,38 +46,16 @@ import java.util.Collection;
 /**
  * This class provides Data Access methods for Post objects
  */
+@ApplicationScoped
 public final class PostDAO implements IPostDAO
 {
     // Constants
-    private static final String SQL_QUERY_NEW_PK = "SELECT max( id_post ) FROM adminwall_post";
-    private static final String SQL_QUERY_SELECT = "SELECT id_post, contenu, date, id_auteur, auteur FROM adminwall_post WHERE id_post = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO adminwall_post ( id_post, contenu, date, id_auteur, auteur ) VALUES ( ?, ?, ?, ? ,?) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_post, contenu, date, id_auteur, auteur, importance FROM adminwall_post WHERE id_post = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO adminwall_post ( contenu, date, id_auteur, auteur, importance ) VALUES ( ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM adminwall_post WHERE id_post = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE adminwall_post SET id_post = ?, contenu = ?, date = ?, id_auteur= ?, auteur = ? WHERE id_post = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_post, contenu, date, id_auteur, auteur FROM adminwall_post ORDER BY id_post DESC";
-    private static final String SQL_QUERY_SELECT_ID_AUTEUR = "SELECT id_post, contenu, date, id_auteur, auteur FROM adminwall_post WHERE id_auteur = ? ORDER BY id_post DESC";
-
-    /**
-     * Generates a new primary key
-     * @param plugin The Plugin
-     * @return The new primary key
-     */
-    public int newPrimaryKey( Plugin plugin )
-    {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
-
-        int nKey = 1;
-
-        if ( daoUtil.next(  ) )
-        {
-            nKey = daoUtil.getInt( 1 ) + 1;
-        }
-
-        daoUtil.free(  );
-
-        return nKey;
-    }
+    private static final String SQL_QUERY_UPDATE = "UPDATE adminwall_post SET id_post = ?, contenu = ?, date = ?, id_auteur= ?, auteur = ?, importance = ? WHERE id_post = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_post, contenu, date, id_auteur, auteur, importance FROM adminwall_post ORDER BY id_post DESC";
+    private static final String SQL_QUERY_SELECT_ID_AUTEUR = "SELECT id_post, contenu, date, id_auteur, auteur, importance FROM adminwall_post WHERE id_auteur = ? ORDER BY id_post DESC";
 
     /**
      * {@inheritDoc }
@@ -82,18 +63,21 @@ public final class PostDAO implements IPostDAO
     @Override
     public void insert( Post post, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
+        {
+            daoUtil.setString( 1, post.getContenu(  ) );
+            daoUtil.setTimestamp( 2, post.getTimestamp(  ) );
+            daoUtil.setInt( 3, post.getIdAuteur(  ) );
+            daoUtil.setString( 4, post.getAuteur(  ) );
+            daoUtil.setString( 5, post.getImportance(  ) );
 
-        post.setIdPost( newPrimaryKey( plugin ) );
+            daoUtil.executeUpdate(  );
 
-        daoUtil.setInt( 1, post.getIdPost(  ) );
-        daoUtil.setString( 2, post.getContenu(  ) );
-        daoUtil.setTimestamp( 3, post.getTimestamp(  ) );
-        daoUtil.setInt( 4, post.getIdAuteur(  ) );
-        daoUtil.setString( 5, post.getAuteur(  ) );
-
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+            if ( daoUtil.nextGeneratedKey(  ) )
+            {
+                post.setIdPost( daoUtil.getGeneratedKeyInt( 1 ) );
+            }
+        }
     }
 
     /**
@@ -102,25 +86,26 @@ public final class PostDAO implements IPostDAO
     @Override
     public Post load( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeQuery(  );
-
-        Post post = null;
-
-        if ( daoUtil.next(  ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
         {
-            post = new Post(  );
-            post.setIdPost( daoUtil.getInt( 1 ) );
-            post.setContenu( daoUtil.getString( 2 ) );
-            post.setTimestamp( daoUtil.getTimestamp( 3 ) );
-            post.setIdAuteur( daoUtil.getInt( 4 ) );
-            post.setAuteur( daoUtil.getString( 5 ) );
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeQuery(  );
+
+            Post post = null;
+
+            if ( daoUtil.next(  ) )
+            {
+                post = new Post(  );
+                post.setIdPost( daoUtil.getInt( 1 ) );
+                post.setContenu( daoUtil.getString( 2 ) );
+                post.setTimestamp( daoUtil.getTimestamp( 3 ) );
+                post.setIdAuteur( daoUtil.getInt( 4 ) );
+                post.setAuteur( daoUtil.getString( 5 ) );
+                post.setImportance( daoUtil.getString( 6 ) );
+            }
+
+            return post;
         }
-
-        daoUtil.free(  );
-
-        return post;
     }
 
     /**
@@ -129,10 +114,11 @@ public final class PostDAO implements IPostDAO
     @Override
     public void delete( int nPostId, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1, nPostId );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
+        {
+            daoUtil.setInt( 1, nPostId );
+            daoUtil.executeUpdate(  );
+        }
     }
 
     /**
@@ -141,17 +127,18 @@ public final class PostDAO implements IPostDAO
     @Override
     public void store( Post post, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
+        {
+            daoUtil.setInt( 1, post.getIdPost(  ) );
+            daoUtil.setString( 2, post.getContenu(  ) );
+            daoUtil.setTimestamp( 3, post.getTimestamp(  ) );
+            daoUtil.setInt( 4, post.getIdAuteur(  ) );
+            daoUtil.setString( 5, post.getAuteur(  ) );
+            daoUtil.setString( 6, post.getImportance(  ) );
+            daoUtil.setInt( 7, post.getIdPost(  ) );
 
-        daoUtil.setInt( 1, post.getIdPost(  ) );
-        daoUtil.setString( 2, post.getContenu(  ) );
-        daoUtil.setTimestamp( 3, post.getTimestamp(  ) );
-        daoUtil.setString( 4, post.getAuteur(  ) );
-        daoUtil.setInt( 5, post.getIdAuteur(  ) );
-        daoUtil.setInt( 6, post.getIdPost(  ) );
-
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+            daoUtil.executeUpdate(  );
+        }
     }
 
     /**
@@ -161,25 +148,26 @@ public final class PostDAO implements IPostDAO
     public Collection<Post> selectPostsList( Plugin plugin )
     {
         Collection<Post> postList = new ArrayList<Post>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
-        daoUtil.executeQuery(  );
-
-        while ( daoUtil.next(  ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-            Post post = new Post(  );
+            daoUtil.executeQuery(  );
 
-            post.setIdPost( daoUtil.getInt( 1 ) );
-            post.setContenu( daoUtil.getString( 2 ) );
-            post.setTimestamp( daoUtil.getTimestamp( 3 ) );
-            post.setIdAuteur( daoUtil.getInt( 4 ) );
-            post.setAuteur( daoUtil.getString( 5 ) );
+            while ( daoUtil.next(  ) )
+            {
+                Post post = new Post(  );
 
-            postList.add( post );
+                post.setIdPost( daoUtil.getInt( 1 ) );
+                post.setContenu( daoUtil.getString( 2 ) );
+                post.setTimestamp( daoUtil.getTimestamp( 3 ) );
+                post.setIdAuteur( daoUtil.getInt( 4 ) );
+                post.setAuteur( daoUtil.getString( 5 ) );
+                post.setImportance( daoUtil.getString( 6 ) );
+
+                postList.add( post );
+            }
+
+            return postList;
         }
-
-        daoUtil.free(  );
-
-        return postList;
     }
 
     /**
@@ -189,26 +177,27 @@ public final class PostDAO implements IPostDAO
     public Collection<Post> selectPostsListIdAuteur( int nIdAuteur, Plugin plugin )
     {
         Collection<Post> postList = new ArrayList<Post>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID_AUTEUR, plugin );
-        daoUtil.setInt( 1, nIdAuteur );
-
-        daoUtil.executeQuery(  );
-
-        while ( daoUtil.next(  ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ID_AUTEUR, plugin ) )
         {
-            Post post = new Post(  );
+            daoUtil.setInt( 1, nIdAuteur );
 
-            post.setIdPost( daoUtil.getInt( 1 ) );
-            post.setContenu( daoUtil.getString( 2 ) );
-            post.setTimestamp( daoUtil.getTimestamp( 3 ) );
-            post.setIdAuteur( daoUtil.getInt( 4 ) );
-            post.setAuteur( daoUtil.getString( 5 ) );
+            daoUtil.executeQuery(  );
 
-            postList.add( post );
+            while ( daoUtil.next(  ) )
+            {
+                Post post = new Post(  );
+
+                post.setIdPost( daoUtil.getInt( 1 ) );
+                post.setContenu( daoUtil.getString( 2 ) );
+                post.setTimestamp( daoUtil.getTimestamp( 3 ) );
+                post.setIdAuteur( daoUtil.getInt( 4 ) );
+                post.setAuteur( daoUtil.getString( 5 ) );
+                post.setImportance( daoUtil.getString( 6 ) );
+
+                postList.add( post );
+            }
+
+            return postList;
         }
-
-        daoUtil.free(  );
-
-        return postList;
     }
 }

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
     <name>adminwall</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <documentation/>
     <installation/>
     <changes/>
@@ -9,21 +9,13 @@
     <description>adminwall.plugin.description</description>
     <provider>adminwall.plugin.provider</provider>
     <provider-url>http://fr.lutece.paris.fr</provider-url>
-    <icon-url>images/admin/skin/feature_default_icon.png</icon-url>
+    <icon-url>themes/admin/shared/plugins/adminwall/images/adminwall.svg</icon-url>
     <copyright>Copyright</copyright>
+    <core-version-dependency>
+        <min-core-version>8.0.0</min-core-version>
+        <max-core-version/>
+    </core-version-dependency>
     <db-pool-required>1</db-pool-required>
-    
-     <!-- Feuilles de style CSS spÃ©cifiques Ã©ventuelles -->
-    <css-stylesheets>
-      
-    </css-stylesheets>
-    
-    <!-- Feuilles de style CSS admin spÃ©cifiques Ã©ventuelles -->
-    <admin-css-stylesheets>
-        <admin-css-stylesheet>css/admin/AdminLTEv2.css</admin-css-stylesheet>
-    </admin-css-stylesheets>
-    
-    
     <!-- Admin features parameters -->
     <admin-features>
         <admin-feature>
@@ -32,9 +24,16 @@
             <feature-description>adminwall.adminFeature.AdminWall.description</feature-description>
             <feature-level>3</feature-level>
             <feature-url>jsp/admin/plugins/adminwall/ManageWall.jsp</feature-url>
-            <feature-icon-url/>
+            <icon-url>ti ti-messages</icon-url>
       </admin-feature>
     </admin-features>    
+
+    <!-- RBAC of the messages : VIEW, CREATE, DELETE ( any message ) -->
+    <rbac-resource-types>
+        <rbac-resource-type>
+            <rbac-resource-type-class>fr.paris.lutece.plugins.adminwall.service.PostResourceIdService</rbac-resource-type-class>
+        </rbac-resource-type>
+    </rbac-resource-types>
   	<!-- XPages parameters -->
     <applications>
     </applications>
@@ -51,6 +50,15 @@
             <dashboard-zone>1</dashboard-zone>
             <dashboard-zone-order>4</dashboard-zone-order>
         </dashboard-component>
+        <!-- the notification zone of the admin header (zone 5 when lutece.dashboard.zones.count=4) : the new messages of the user -->
+        <dashboard-component>
+            <dashboard-component-name>ADMINWALL_NOTIFICATION</dashboard-component-name>
+            <dashboard-component-class>fr.paris.lutece.plugins.adminwall.web.NotificationDashboardComponent</dashboard-component-class>
+            <dashboard-feature-right>ADMINWALL_ACCESS</dashboard-feature-right>
+            <dashboard-zone>5</dashboard-zone>
+            <dashboard-zone-order>1</dashboard-zone-order>
+        </dashboard-component>
     </dashboard-components>
+
     
 </plug-in>
